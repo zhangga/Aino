@@ -4,6 +4,7 @@ OUT_DIR=$(CUR_DIR)/bin
 
 # 命令
 GO_BUILD = CGO_ENABLED=0 go build -trimpath
+GO_RUN = CGO_ENABLED=0 go run
 
 SERVER_VERSION	?= $(shell git describe --long --tags --dirty --always)
 SERVER_VERSION	?= unkonwn
@@ -30,6 +31,13 @@ build:
 	-ldflags '$(VERSION_BUILD_LDFLAGS)' \
 	-o $(OUT_DIR)/ \
 	./cmd/aino
+
+.PHONY: run
+# run
+run:
+	$(GO_RUN) \
+	-ldflags '$(VERSION_BUILD_LDFLAGS)' \
+	./cmd/aino run
 
 .PHONY: test
 # run all test

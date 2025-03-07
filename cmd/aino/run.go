@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"github.com/zhangga/aino/internal/eino"
+	"github.com/zhangga/aino/internal/langchain"
 	"log"
 	"os"
 	"os/signal"
@@ -38,6 +40,7 @@ func init() {
 	Config.LLMConfig = &conf.LLMConfig{}
 	cmdRun.Flags().StringVar(&Config.LLMConfig.Model, "llm.model", "", "LLM Model. ENV: LLM_MODEL")
 	cmdRun.Flags().StringVar(&Config.LLMConfig.ApiKey, "llm.api_key", "", "LLM ApiKey. ENV: LLM_API_KEY")
+	cmdRun.Flags().StringVar(&Config.LLMConfig.BaseURL, "llm.base_url", "", "LLM BaseUrl. ENV: LLM_BASE_URL")
 }
 
 func init() {
@@ -75,6 +78,22 @@ func run(cmd *cobra.Command, args []string) {
 		defer wg.Done()
 
 		lark.RunService(ctx, Config.LarkConfig.AppID, Config.LarkConfig.AppSecret)
+	}()
+
+	// 启动langchain
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+
+		langchain.Run(ctx, Config.LLMConfig)
+	}()
+
+	// 启动eino
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+
+		eino.Run(ctx, Config.LLMConfig)
 	}()
 
 	// 监听系统信号

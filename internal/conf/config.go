@@ -22,6 +22,7 @@ type LarkConfig struct {
 }
 
 type LLMConfig struct {
-	Model  string `yaml:"model" json:"model" mapstructure:"model"`
-	ApiKey string `yaml:"api_key" json:"api_key" mapstructure:"api_key"`
+	Model   string `yaml:"model" json:"model" mapstructure:"model"`
+	ApiKey  string `yaml:"api_key" json:"api_key" mapstructure:"api_key"`
+	BaseURL string `yaml:"base_url" json:"base_url" mapstructure:"base_url"`
 }
