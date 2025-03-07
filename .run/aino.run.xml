@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="aino" type="GoApplicationRunConfiguration" factoryName="Go Application">
+    <module name="Aino" />
+    <working_directory value="$PROJECT_DIR$" />
+    <parameters value="run" />
+    <kind value="PACKAGE" />
+    <package value="github.com/zhangga/aino/cmd/aino" />
+    <directory value="$PROJECT_DIR$" />
+    <filePath value="$PROJECT_DIR$/cmd/aino/main.go" />
+    <method v="2" />
+  </configuration>
+</component>
