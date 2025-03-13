@@ -3,13 +3,15 @@ package main
 import (
 	"context"
 	"github.com/zhangga/aino/internal/eino"
-	"github.com/zhangga/aino/internal/langchain"
-	"log"
 	"os"
 	"os/signal"
 	"strings"
 	"sync"
 	"syscall"
+
+	"github.com/zhangga/aino/internal/langchain"
+	"github.com/zhangga/aino/pkg/logger"
+	"go.uber.org/zap"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -54,17 +56,25 @@ func init() {
 }
 
 func run(cmd *cobra.Command, args []string) {
+	// 初始化日志
+	logger.InitLogger()
+	defer logger.Sync()
+
+	logger.Info("Aino service starting...")
+
 	// 指定了配置文件，但是文件不存在
 	if cmd.Flags().Changed("config") {
 		// 检查文件是否存在
 		if _, err := os.Stat(ConfigPath); err != nil {
-			log.Fatalf("config file: %s, no exist, err=%v", ConfigPath, err)
+			logger.Fatal("config file not exist",
+				zap.String("path", ConfigPath),
+				zap.Error(err))
 		}
 	}
 
 	// 读取配置
 	if err := config.LoadConfig(&Config, ConfigPath); err != nil {
-		log.Fatalf("load config file: %s failed, err=%v", ConfigPath, err)
+		logger.Fatalf("load config file: %s failed, err=%v", ConfigPath, err)
 	}
 
 	// 控制组件的启动和关闭
@@ -117,7 +127,7 @@ func listenForOSSignal(ctx context.Context, cancel context.CancelFunc, wg *sync.
 		)
 		select {
 		case s := <-chSignal:
-			log.Printf("os.Signal received: %s\n", s.String())
+			logger.Infof("os.Signal received: %s\n", s.String())
 		case <-ctx.Done():
 			return
 		}
@@ -128,6 +138,6 @@ func listenForOSSignal(ctx context.Context, cancel context.CancelFunc, wg *sync.
 	}()
 }
 
-func shutdownGracefully(ctx context.Context, wg *sync.WaitGroup) {
+func shutdownGracefully(_ context.Context, wg *sync.WaitGroup) {
 	wg.Wait()
 }

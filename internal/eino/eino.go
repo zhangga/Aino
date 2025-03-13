@@ -5,7 +5,7 @@ import (
 	"github.com/cloudwego/eino-ext/components/model/openai"
 	"github.com/cloudwego/eino/schema"
 	"github.com/zhangga/aino/internal/conf"
-	"log"
+	"github.com/zhangga/aino/pkg/logger"
 )
 
 func Run(ctx context.Context, llmConfig *conf.LLMConfig) (string, error) {
@@ -21,9 +21,10 @@ func Run(ctx context.Context, llmConfig *conf.LLMConfig) (string, error) {
 		schema.UserMessage("what does the future AI App look like?"),
 	})
 	if err != nil {
-		panic(err)
+		logger.Errorf("eino.Generate failed, err=%v", err)
+		return "", err
 	}
 
-	log.Println(message.Content)
+	logger.Info(message.Content)
 	return "", nil
 }

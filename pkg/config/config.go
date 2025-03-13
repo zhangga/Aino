@@ -3,7 +3,7 @@ package config
 import (
 	"errors"
 	"fmt"
-	"log"
+	"github.com/zhangga/aino/pkg/logger"
 	"os"
 	"strings"
 
@@ -70,7 +70,7 @@ func loadConfigByFile(configPath string) error {
 	_, err := os.Stat(filePath)
 	// 文件存在
 	if err == nil || os.IsExist(err) {
-		log.Printf("load config file ----->: %s", filePath)
+		logger.Infof("load config file ----->: %s", filePath)
 		viper.SetConfigFile(filePath)
 		return viper.ReadInConfig()
 	}
@@ -78,7 +78,7 @@ func loadConfigByFile(configPath string) error {
 	// 2. 读取指定的配置文件
 	_, err = os.Stat(configPath)
 	if err == nil || os.IsExist(err) {
-		log.Printf("load config file ----->: %s", configPath)
+		logger.Infof("load config file ----->: %s", configPath)
 		viper.SetConfigFile(configPath)
 		return viper.ReadInConfig()
 	}

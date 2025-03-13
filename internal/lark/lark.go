@@ -3,12 +3,12 @@ package lark
 import (
 	"context"
 	"fmt"
-
 	larkcore "github.com/larksuite/oapi-sdk-go/v3/core"
 	larkevent "github.com/larksuite/oapi-sdk-go/v3/event"
 	"github.com/larksuite/oapi-sdk-go/v3/event/dispatcher"
 	larkim "github.com/larksuite/oapi-sdk-go/v3/service/im/v1"
 	larkws "github.com/larksuite/oapi-sdk-go/v3/ws"
+	"github.com/zhangga/aino/pkg/logger"
 )
 
 func RunService(ctx context.Context, appId, appSecret string) {
@@ -44,6 +44,7 @@ func RunService(ctx context.Context, appId, appSecret string) {
 	cli := larkws.NewClient(appId, appSecret,
 		larkws.WithEventHandler(eventHandler),
 		larkws.WithLogLevel(larkcore.LogLevelDebug),
+		larkws.WithLogger(&LarkLogger{Logger: logger.Default}),
 	)
 
 	// 启动客户端。目前lark client里不响应ctx的cancel，自己来控制了
@@ -60,4 +61,24 @@ func RunService(ctx context.Context, appId, appSecret string) {
 	case <-ctx.Done():
 	case <-ch:
 	}
+}
+
+type LarkLogger struct {
+	Logger logger.ILogger
+}
+
+func (z *LarkLogger) Debug(ctx context.Context, args ...interface{}) {
+	z.Logger.Debug(fmt.Sprint(args...))
+}
+
+func (z *LarkLogger) Info(ctx context.Context, args ...interface{}) {
+	z.Logger.Info(fmt.Sprint(args...))
+}
+
+func (z *LarkLogger) Warn(ctx context.Context, args ...interface{}) {
+	z.Logger.Warn(fmt.Sprint(args...))
+}
+
+func (z *LarkLogger) Error(ctx context.Context, args ...interface{}) {
+	z.Logger.Error(fmt.Sprint(args...))
 }

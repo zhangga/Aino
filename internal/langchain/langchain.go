@@ -3,11 +3,10 @@ package langchain
 import (
 	"context"
 	"fmt"
-	"log"
-
 	"github.com/tmc/langchaingo/llms"
 	"github.com/tmc/langchaingo/llms/openai"
 	"github.com/zhangga/aino/internal/conf"
+	"github.com/zhangga/aino/pkg/logger"
 )
 
 func Run(ctx context.Context, llmConfig *conf.LLMConfig) {
@@ -18,7 +17,7 @@ func Run(ctx context.Context, llmConfig *conf.LLMConfig) {
 		openai.WithBaseURL(llmConfig.BaseURL),
 	)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 
 	content := []llms.MessageContent{
@@ -31,7 +30,7 @@ func Run(ctx context.Context, llmConfig *conf.LLMConfig) {
 			fmt.Print(string(chunk))
 			return nil
 		})); err != nil {
-		log.Fatal(err)
+		logger.Errorf("langchain.Generate failed, err=%v", err)
 	}
 
 }
