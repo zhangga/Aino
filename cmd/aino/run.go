@@ -3,20 +3,21 @@ package main
 import (
 	"context"
 	"github.com/zhangga/aino/internal/eino"
+	"github.com/zhangga/aino/internal/handler"
+	"github.com/zhangga/aino/internal/tools"
 	"os"
 	"os/signal"
 	"strings"
 	"sync"
 	"syscall"
 
-	"github.com/zhangga/aino/internal/langchain"
 	"github.com/zhangga/aino/pkg/logger"
 	"go.uber.org/zap"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/zhangga/aino/internal/conf"
-	"github.com/zhangga/aino/internal/lark"
+	"github.com/zhangga/aino/internal/larksrv"
 	"github.com/zhangga/aino/pkg/config"
 )
 
@@ -82,29 +83,33 @@ func run(cmd *cobra.Command, args []string) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	// 启动LarkService，目前lark里面没法友好结束，先不用wg控制
+	tools.InitTools(ctx, &Config)
+
+	// 启动处理服务
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
+		handler.RunService(ctx)
+	}()
 
-		lark.RunService(ctx, Config.LarkConfig.AppID, Config.LarkConfig.AppSecret)
+	// 启动LarkService
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		larksrv.RunService(ctx, Config.LarkConfig.AppID, Config.LarkConfig.AppSecret)
 	}()
 
 	// 启动langchain
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
+	//wg.Add(1)
+	//go func() {
+	//	defer wg.Done()
+	//	langchain.Run(ctx, Config.LLMConfig)
+	//}()
 
-		langchain.Run(ctx, Config.LLMConfig)
-	}()
-
-	// 启动eino
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-
-		eino.Run(ctx, Config.LLMConfig)
-	}()
+	// 初始化eino agent
+	if err := eino.InitAgent(ctx, Config.LLMConfig); err != nil {
+		logger.Fatal("init eino agent failed, err: %v", err)
+	}
 
 	// 监听系统信号
 	listenForOSSignal(ctx, cancel, &wg)

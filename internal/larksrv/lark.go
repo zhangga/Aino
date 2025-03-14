@@ -1,4 +1,4 @@
-package lark
+package larksrv
 
 import (
 	"context"
@@ -8,35 +8,26 @@ import (
 	"github.com/larksuite/oapi-sdk-go/v3/event/dispatcher"
 	larkim "github.com/larksuite/oapi-sdk-go/v3/service/im/v1"
 	larkws "github.com/larksuite/oapi-sdk-go/v3/ws"
+	"github.com/zhangga/aino/internal/handler"
 	"github.com/zhangga/aino/pkg/logger"
 )
 
+// RunService 启动服务监听lark消息
 func RunService(ctx context.Context, appId, appSecret string) {
 	// 注册事件回调，OnP2MessageReceiveV1 为接收消息 v2.0；OnCustomizedEvent 内的 message 为接收消息 v1.0。
 	eventHandler := dispatcher.NewEventDispatcher("", "").
 		OnP2MessageReceiveV1(func(ctx context.Context, event *larkim.P2MessageReceiveV1) error {
-			// 获取父消息ID
-			// parentMsgId := event.Message.ParentId
-			// if parentMsgId != "" {
-			// 	// 调用获取消息详情API
-			// 	resp, err := larkim.NewService(cli.Client).Messages.Get(context.Background(),
-			// 		larkim.NewGetMessageReqBuilder()
-			// 			.MessageId(parentMsgId)
-			// 			.Build())
-
-			// 	if err != nil {
-			// 		fmt.Printf("获取父消息失败: %v\n", err)
-			// 	} else {
-			// 		fmt.Printf("被回复的原始消息内容: %s\n",
-			// 			larkcore.Prettify(resp.Items[0].Body.Content))
-			// 	}
-			// }
-
-			fmt.Printf("[ OnP2MessageReceiveV1 access ], data: %s\n", larkcore.Prettify(event))
+			logger.Debugf("[ Lark.OnP2MessageReceiveV1 access ], data: %s\n", larkcore.Prettify(event))
+			// 创建处理lark消息的任务
+			task := handler.NewLarkTask(event)
+			if err := handler.AddTask(task); err != nil {
+				logger.Errorf("[ Lark.OnP2MessageReceiveV1 access ], add task err: %v\n", err)
+				return err
+			}
 			return nil
 		}).
 		OnCustomizedEvent("这里填入你要自定义订阅的 event 的 key，例如 out_approval", func(ctx context.Context, event *larkevent.EventReq) error {
-			fmt.Printf("[ OnCustomizedEvent access ], type: message, data: %s\n", string(event.Body))
+			logger.Debugf("[ Lark.OnCustomizedEvent access ], type: message, data: %s\n", string(event.Body))
 			return nil
 		})
 

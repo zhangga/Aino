@@ -3,6 +3,7 @@ module github.com/zhangga/aino
 go 1.23.4
 
 require (
+	github.com/bytedance/sonic v1.12.2
 	github.com/cloudwego/eino v0.3.14
 	github.com/cloudwego/eino-ext/components/model/openai v0.0.0-20250307041348-895bf354b129
 	github.com/joho/godotenv v1.5.1
@@ -10,17 +11,18 @@ require (
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/viper v1.19.0
+	github.com/stretchr/testify v1.10.0
 	github.com/tmc/langchaingo v0.1.13
 	go.uber.org/zap v1.27.0
 )
 
 require (
 	github.com/BurntSushi/toml v1.4.0 // indirect
-	github.com/bytedance/sonic v1.12.2 // indirect
 	github.com/bytedance/sonic/loader v0.2.0 // indirect
 	github.com/cloudwego/base64x v0.1.4 // indirect
 	github.com/cloudwego/eino-ext/libs/acl/openai v0.0.0-20250305023926-469de0301955 // indirect
 	github.com/cloudwego/iasm v0.2.0 // indirect
+	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/dlclark/regexp2 v1.10.0 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
@@ -48,6 +50,7 @@ require (
 	github.com/perimeterx/marshmallow v1.1.4 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pkoukk/tiktoken-go v0.1.6 // indirect
+	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/sagikazarmark/locafero v0.4.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
 	github.com/sashabaranov/go-openai v1.32.5 // indirect

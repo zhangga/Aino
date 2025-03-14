@@ -17,16 +17,19 @@ type ILogger interface {
 	Info(args ...interface{})
 	Warn(args ...interface{})
 	Error(args ...interface{})
+	Panic(args ...interface{})
 	Fatal(args ...interface{})
 	Debugf(template string, args ...interface{})
 	Infof(template string, args ...interface{})
 	Warnf(template string, args ...interface{})
 	Errorf(template string, args ...interface{})
+	Panicf(template string, args ...interface{})
 	Fatalf(template string, args ...interface{})
 	Debugw(msg string, keysAndValues ...interface{})
 	Infow(msg string, keysAndValues ...interface{})
 	Warnw(msg string, keysAndValues ...interface{})
 	Errorw(msg string, keysAndValues ...interface{})
+	Panicw(msg string, keysAndValues ...interface{})
 	Fatalw(msg string, keysAndValues ...interface{})
 	Sync() error
 }
@@ -36,12 +39,14 @@ func InitLogger() {
 	encoder := getEncoder()
 	core := zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel)
 
-	logger := zap.New(core, zap.AddCaller(), zap.AddCallerSkip(1), zap.AddStacktrace(zap.FatalLevel))
+	logger := zap.New(core, zap.AddCaller(), zap.AddCallerSkip(1), zap.AddStacktrace(zap.PanicLevel))
 	Default = logger.Sugar()
 }
 
-func Sync() error {
-	return Default.Sync()
+func Sync() {
+	if err := Default.Sync(); err != nil {
+		panic(err)
+	}
 }
 
 func Debug(args ...interface{}) {
@@ -58,6 +63,10 @@ func Warn(args ...interface{}) {
 
 func Error(args ...interface{}) {
 	Default.Error(args...)
+}
+
+func Panic(args ...interface{}) {
+	Default.Panic(args...)
 }
 
 func Fatal(args ...interface{}) {
@@ -80,6 +89,10 @@ func Errorw(msg string, keysAndValues ...interface{}) {
 	Default.Errorw(msg, keysAndValues...)
 }
 
+func Panicw(msg string, keysAndValues ...interface{}) {
+	Default.Panicw(msg, keysAndValues...)
+}
+
 func Fatalw(msg string, keysAndValues ...interface{}) {
 	Default.Fatalw(msg, keysAndValues...)
 }
@@ -100,6 +113,10 @@ func Errorf(template string, args ...interface{}) {
 	Default.Errorf(template, args...)
 }
 
+func Panicf(template string, args ...interface{}) {
+	Default.Panicf(template, args...)
+}
+
 func Fatalf(template string, args ...interface{}) {
 	Default.Fatalf(template, args...)
 }
@@ -115,7 +132,7 @@ func getEncoder() zapcore.Encoder {
 func getLogWriter() zapcore.WriteSyncer {
 	lumberJackLogger := &lumberjack.Logger{
 		Filename:   "./logs/app.log",
-		MaxSize:    100,
+		MaxSize:    100, //MB
 		MaxBackups: 5,
 		MaxAge:     30,
 		Compress:   false,
