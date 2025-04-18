@@ -60,14 +60,14 @@ func (t *LarkTask) AsActionInfo() (handlers.ActionInfo, error) {
 		return nil, err
 	}
 
-	content := t.Msg.Event.Message.Content
-	msgId := t.Msg.Event.Message.MessageId
-	rootId := t.Msg.Event.Message.RootId
-	chatId := t.Msg.Event.Message.ChatId
+	content := getValueNotNull(t.Msg.Event.Message.Content)
+	msgId := getValueNotNull(t.Msg.Event.Message.MessageId)
+	rootId := getValueNotNull(t.Msg.Event.Message.RootId)
+	chatId := getValueNotNull(t.Msg.Event.Message.ChatId)
 	mention := t.Msg.Event.Message.Mentions
 
 	sessionId := rootId
-	if sessionId == nil || *sessionId == "" {
+	if sessionId == "" {
 		sessionId = msgId
 	}
 
@@ -78,12 +78,19 @@ func (t *LarkTask) AsActionInfo() (handlers.ActionInfo, error) {
 		ChatId:      chatId,
 		SessionId:   sessionId,
 		Mention:     mention,
-		QParsed:     strings.Trim(parseContent(*content, msgType), " "),
-		FileKey:     parseFileKey(*content),
-		ImageKey:    parseImageKey(*content),
-		ImageKeys:   parsePostImageKeys(*content),
+		QParsed:     strings.Trim(parseContent(content, msgType), " "),
+		FileKey:     parseFileKey(content),
+		ImageKey:    parseImageKey(content),
+		ImageKeys:   parsePostImageKeys(content),
 	}
 	return data, nil
+}
+
+func getValueNotNull(ptr *string) string {
+	if ptr == nil {
+		return ""
+	}
+	return *ptr
 }
 
 func judgeChatType(msg *larkim.P2MessageReceiveV1) (handlers.HandlerType, error) {

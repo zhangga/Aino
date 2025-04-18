@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/zhangga/aino/internal/service/cache"
 	"github.com/zhangga/aino/internal/service/handlers"
 	"github.com/zhangga/aino/pkg/logger"
 	"runtime/debug"
@@ -19,11 +20,12 @@ type Service struct {
 }
 
 func RunService(ctx context.Context, httpPort int) error {
+	msgCache := cache.NewMsgCache()
 	service = &Service{
 		ctx:            ctx,
 		httpPort:       httpPort,
 		taskChan:       make(chan Task, 1024),
-		messageHandler: handlers.NewMessageHandler(),
+		messageHandler: handlers.NewMessageHandler(msgCache),
 	}
 	return service.Start()
 }
