@@ -72,7 +72,37 @@ func (c *Client) GetMessageV1(msgId string) (*LarkMessage, error) {
 	return &msg, nil
 }
 
-func (c *Client) SendMessage(receiveId, msgType, content, uuid string) error {
+func (c *Client) SendMessage(chatId, msgType, content, uuid string) error {
+	msgContent := &LarkMsgContent{Text: content}
+	body, err := sonic.Marshal(msgContent)
+	if err != nil {
+		logger.Errorf("序列化消息内容失败: %v", err)
+		return err
+	}
+	// 创建请求对象
+	req := larkim.NewCreateMessageReqBuilder().
+		ReceiveIdType("chat_id").
+		Body(larkim.NewCreateMessageReqBodyBuilder().
+			ReceiveId(chatId).
+			MsgType(msgType).
+			Content(string(body)).
+			Uuid(uuid).
+			Build()).
+		Build()
+	// 发起请求
+	resp, err := c.larkClient.Im.V1.Message.Create(c.ctx, req)
+	// 处理错误
+	if err != nil {
+		logger.Errorf("[LarkClient.SendMessage] 请求失败: %v", err)
+		return err
+	}
+	// 服务端错误处理
+	if !resp.Success() {
+		logger.Errorf("[LarkClient.SendMessage] requestId: %s, error response: \n%s", resp.RequestId(), larkcore.Prettify(resp.CodeError))
+		return fmt.Errorf("requestId: %s, error response: \n%s", resp.RequestId(), larkcore.Prettify(resp.CodeError))
+	}
+	// 业务处理
+	logger.Infof("[LarkClient.SendMessage] SendMessage -> receiveId: %s, content: %s", chatId, larkcore.Prettify(content))
 	return nil
 }
 
@@ -104,4 +134,8 @@ func (c *Client) doRequest(method, url string, body io.Reader, headers map[strin
 	}
 
 	return io.ReadAll(resp.Body)
+}
+
+type LarkMsgContent struct {
+	Text string `json:"text"`
 }

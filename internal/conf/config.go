@@ -5,6 +5,7 @@ import "github.com/zhangga/aino/pkg/config"
 var _ config.IConfig = (*Config)(nil)
 
 type Config struct {
+	ServiceConfig *ServiceConfig `yaml:"service" json:"service" mapstructure:"service"`
 	// Lark配置
 	LarkConfig *LarkConfig `yaml:"lark" json:"lark" mapstructure:"lark"`
 	// LLM配置
@@ -14,6 +15,10 @@ type Config struct {
 // ValidData implements config.IConfig.
 func (c *Config) ValidData() bool {
 	return true
+}
+
+type ServiceConfig struct {
+	HttpPort int `yaml:"http_port" json:"http_port" mapstructure:"http_port"`
 }
 
 type LarkConfig struct {

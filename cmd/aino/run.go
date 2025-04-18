@@ -3,7 +3,8 @@ package main
 import (
 	"context"
 	"github.com/zhangga/aino/internal/eino"
-	"github.com/zhangga/aino/internal/handler"
+	"github.com/zhangga/aino/internal/rolelist"
+	"github.com/zhangga/aino/internal/service"
 	"github.com/zhangga/aino/internal/tools"
 	"os"
 	"os/signal"
@@ -83,13 +84,16 @@ func run(cmd *cobra.Command, args []string) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
+	rolelist.InitRoleList(ctx)
 	tools.InitTools(ctx, &Config)
 
 	// 启动处理服务
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		handler.RunService(ctx)
+		if err := service.RunService(ctx, Config.ServiceConfig.HttpPort); err != nil {
+			logger.Fatal("run service failed", zap.Error(err))
+		}
 	}()
 
 	// 启动LarkService

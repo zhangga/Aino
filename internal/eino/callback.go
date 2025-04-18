@@ -5,9 +5,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
+
 	"github.com/cloudwego/eino/callbacks"
 	"github.com/cloudwego/eino/schema"
-	"io"
 )
 
 type LoggerCallback struct {
@@ -15,9 +16,9 @@ type LoggerCallback struct {
 }
 
 func (cb *LoggerCallback) OnStart(ctx context.Context, info *callbacks.RunInfo, input callbacks.CallbackInput) context.Context {
-	fmt.Println("==================")
+	fmt.Println("=========[OnStart]=========")
 	inputStr, _ := json.MarshalIndent(input, "", "  ") // nolint: byted_s_returned_err_check
-	fmt.Printf("[OnStart] %s\n", string(inputStr))
+	fmt.Println(string(inputStr))
 	return ctx
 }
 

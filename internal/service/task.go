@@ -1,7 +1,8 @@
-package handler
+package service
 
 import (
 	"context"
+	"github.com/zhangga/aino/internal/service/handlers"
 	"github.com/zhangga/aino/pkg/logger"
 	"runtime/debug"
 )
@@ -15,6 +16,7 @@ const (
 type Task interface {
 	Id() uint64
 	Type() TaskType
+	AsActionInfo() (handlers.ActionInfo, error)
 	Run(ctx context.Context)
 }
 
