@@ -4,8 +4,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/zhangga/aino/internal/service/cache"
+	lark "github.com/larksuite/oapi-sdk-go/v3"
+	"github.com/zhangga/aino/internal/conf"
 	"github.com/zhangga/aino/internal/service/handlers"
+	"github.com/zhangga/aino/internal/service/sctx"
 	"github.com/zhangga/aino/pkg/logger"
 	"runtime/debug"
 )
@@ -14,18 +16,19 @@ var service *Service
 
 type Service struct {
 	ctx            context.Context
-	httpPort       int
+	srvConf        *conf.ServiceConfig
 	taskChan       chan Task
 	messageHandler handlers.MessageHandlerInterface
+	larkClient     *lark.Client
 }
 
-func RunService(ctx context.Context, httpPort int) error {
-	msgCache := cache.NewMsgCache()
+func RunService(ctx context.Context, srvConf *conf.ServiceConfig, larkConf *conf.LarkConfig) error {
 	service = &Service{
 		ctx:            ctx,
-		httpPort:       httpPort,
+		srvConf:        srvConf,
 		taskChan:       make(chan Task, 1024),
-		messageHandler: handlers.NewMessageHandler(msgCache),
+		messageHandler: handlers.NewMessageHandler(),
+		larkClient:     lark.NewClient(larkConf.AppID, larkConf.AppSecret),
 	}
 	return service.Start()
 }
@@ -36,8 +39,8 @@ func (srv *Service) Start() error {
 	go func() {
 		r := gin.Default()
 		ginHandlers(r)
-		logger.Infof("http server started: http://localhost:%d/ping\n", srv.httpPort)
-		if err := r.Run(fmt.Sprintf(":%d", srv.httpPort)); err != nil {
+		logger.Infof("http server started: http://localhost:%d/ping\n", srv.srvConf.HttpPort)
+		if err := r.Run(fmt.Sprintf(":%d", srv.srvConf.HttpPort)); err != nil {
 			errAccepted <- err
 		}
 	}()
@@ -75,6 +78,8 @@ func (srv *Service) SafeHandle(task Task) {
 		}
 	}()
 
+	ctx := sctx.WithContext(srv.ctx).WithServiceConfig(srv.srvConf).WithLarkClient(srv.larkClient)
+
 	actionInfo, err := task.AsActionInfo()
 	if err != nil {
 		logger.Errorf("[Task] taskId=%d, taskType=%d, AsData error: %v", task.Id(), task.Type(), err)
@@ -83,8 +88,13 @@ func (srv *Service) SafeHandle(task Task) {
 
 	switch task.Type() {
 	case TaskTypeLark:
-		if err = srv.messageHandler.MsgReceivedHandler(srv.ctx, actionInfo); err != nil {
+		if err = srv.messageHandler.MsgReceivedHandler(ctx, actionInfo); err != nil {
 			logger.Errorf("[Task] taskId=%d, taskType=%d, MsgReceivedHandler error: %v", task.Id(), task.Type(), err)
+			return
+		}
+	case TaskTypeCard:
+		if err = srv.messageHandler.CardHandler(ctx, actionInfo); err != nil {
+			logger.Errorf("[Task] taskId=%d, taskType=%d, CardActionHandler error: %v", task.Id(), task.Type(), err)
 			return
 		}
 	default:

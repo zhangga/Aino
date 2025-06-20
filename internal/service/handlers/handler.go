@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"context"
-	larkcard "github.com/larksuite/oapi-sdk-go/v3/card"
 	"github.com/zhangga/aino/internal/service/cache"
 	"github.com/zhangga/aino/pkg/logger"
 )
@@ -10,12 +9,27 @@ import (
 var _ MessageHandlerInterface = (*MessageHandler)(nil)
 
 type MessageHandler struct {
-	msgCache cache.MsgCacheInterface
+	msgCache     cache.MsgCacheInterface
+	sessionCache cache.SessionCacheInterface
+	cardHandlers map[string]CardHandlerFunc
 }
 
-func NewMessageHandler(msgCache cache.MsgCacheInterface) MessageHandlerInterface {
+func NewMessageHandler() MessageHandlerInterface {
+	cardMetas := []CardHandlerMeta{
+		NewClearCardHandler,
+		NewRoleTagCardHandler,
+		NewRoleCardHandler,
+	}
+
+	cardHandlers := make(map[string]CardHandlerFunc)
+	for _, cardMeta := range cardMetas {
+		kind, handler := cardMeta()
+		cardHandlers[string(kind)] = handler
+	}
 	return &MessageHandler{
-		msgCache: msgCache,
+		msgCache:     cache.NewMsgCache(),
+		sessionCache: cache.NewSessionCache(),
+		cardHandlers: cardHandlers,
 	}
 }
 
@@ -28,11 +42,24 @@ func (m *MessageHandler) MsgReceivedHandler(ctx context.Context, info ActionInfo
 	}
 	actions := []Action{
 		&ProcessedUniqueAction{}, //避免重复处理
+		&ClearAction{},           //清除缓存
+		&RoleListAction{},        //角色列表
+		&StreamMessageAction{},   //流式消息
 	}
 	return chain(data, actions...)
 }
 
-func (m *MessageHandler) CardHandler(ctx context.Context, cardAction *larkcard.CardAction) (interface{}, error) {
-	//TODO implement me
-	panic("implement me")
+func (m *MessageHandler) CardHandler(ctx context.Context, info ActionInfo) error {
+	logger.Debugf("处理卡片: %v", info)
+	cardInfo, ok := info.(*CardActionInfo)
+	if !ok {
+		logger.Errorf("cast card action info failed: %v", info)
+		return ErrorCastCardActionInfo
+	}
+	if h, ok := m.cardHandlers[info.GetMsgType()]; ok {
+		return h(ctx, m, cardInfo)
+	}
+
+	logger.Warnf("handler not found: %v", info)
+	return nil
 }

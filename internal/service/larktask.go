@@ -51,7 +51,7 @@ func (t *LarkTask) Type() TaskType {
 }
 
 func (t *LarkTask) AsActionInfo() (handlers.ActionInfo, error) {
-	handlerType, err := judgeChatType(t.Msg)
+	chatType, err := judgeChatType(t.Msg)
 	if err != nil {
 		return nil, err
 	}
@@ -72,18 +72,43 @@ func (t *LarkTask) AsActionInfo() (handlers.ActionInfo, error) {
 	}
 
 	data := &handlers.MessageActionInfo{
-		HandlerType: handlerType,
-		MsgType:     msgType,
-		MsgId:       msgId,
-		ChatId:      chatId,
-		SessionId:   sessionId,
-		Mention:     mention,
-		QParsed:     strings.Trim(parseContent(content, msgType), " "),
-		FileKey:     parseFileKey(content),
-		ImageKey:    parseImageKey(content),
-		ImageKeys:   parsePostImageKeys(content),
+		ChatType:  chatType,
+		MsgType:   msgType,
+		MsgId:     msgId,
+		ChatId:    chatId,
+		SessionId: sessionId,
+		Mention:   mention,
+		Content:   strings.Trim(parseContent(content, msgType), " "),
+		FileKey:   parseFileKey(content),
+		ImageKey:  parseImageKey(content),
+		ImageKeys: parsePostImageKeys(content),
 	}
 	return data, nil
+}
+
+func (t *LarkTask) Run(ctx context.Context) {
+	ragent, err := eino.NewAgentByType(ctx, larkPrompt, larkTools...)
+	if err != nil {
+		panic(err)
+	}
+
+	message, err := sonic.Marshal(t.Msg.Event)
+	if err != nil {
+		panic(err)
+	}
+	result, err := ragent.Generate(ctx, []*schema.Message{
+		{
+			Role:    schema.User,
+			Content: string(message),
+		},
+	}, agent.WithComposeOptions(compose.WithCallbacks(&eino.LoggerCallback{})))
+	if err != nil {
+		panic(err)
+	}
+
+	logger.Infof("Lark taskId=%d, result=%v", t.id, result)
+
+	tools.NewToolLarkSendMsg().(*tools.ToolLarkSendMsg).SendMessage(ctx, *t.Msg.Event.Message.ChatId, string(result.Content))
 }
 
 func getValueNotNull(ptr *string) string {
@@ -93,13 +118,13 @@ func getValueNotNull(ptr *string) string {
 	return *ptr
 }
 
-func judgeChatType(msg *larkim.P2MessageReceiveV1) (handlers.HandlerType, error) {
+func judgeChatType(msg *larkim.P2MessageReceiveV1) (handlers.ChatType, error) {
 	chatType := msg.Event.Message.ChatType
 	switch *chatType {
 	case "group":
-		return handlers.GroupHandler, nil
+		return handlers.ChatGroup, nil
 	case "p2p":
-		return handlers.UserHandler, nil
+		return handlers.ChatUser, nil
 	default:
 		return "", fmt.Errorf("unknow chat type: %s", *chatType)
 	}
@@ -225,29 +250,4 @@ func msgFilter(msg string) string {
 	//replace @到下一个非空的字段 为 ''
 	regex := regexp.MustCompile(`@[^ ]*`)
 	return regex.ReplaceAllString(msg, "")
-}
-
-func (t *LarkTask) Run(ctx context.Context) {
-	ragent, err := eino.NewAgentByType(ctx, larkPrompt, larkTools...)
-	if err != nil {
-		panic(err)
-	}
-
-	message, err := sonic.Marshal(t.Msg.Event)
-	if err != nil {
-		panic(err)
-	}
-	result, err := ragent.Generate(ctx, []*schema.Message{
-		{
-			Role:    schema.User,
-			Content: string(message),
-		},
-	}, agent.WithComposeOptions(compose.WithCallbacks(&eino.LoggerCallback{})))
-	if err != nil {
-		panic(err)
-	}
-
-	logger.Infof("Lark taskId=%d, result=%v", t.id, result)
-
-	tools.NewToolLarkSendMsg().(*tools.ToolLarkSendMsg).SendMessage(ctx, *t.Msg.Event.Message.ChatId, string(result.Content))
 }

@@ -6,6 +6,7 @@ import (
 	"github.com/cloudwego/eino/components/tool"
 	"github.com/cloudwego/eino/compose"
 	"github.com/cloudwego/eino/flow/agent/react"
+	"github.com/cloudwego/eino/schema"
 	"github.com/zhangga/aino/internal/conf"
 	"github.com/zhangga/aino/internal/tools"
 )
@@ -27,6 +28,16 @@ func NewAgentByType(ctx context.Context, persona string, creators ...tools.Creat
 	return NewAgent(ctx, persona, ts...)
 }
 
+func NewMessageModifier(outerInput []*schema.Message) react.MessageModifier {
+	return func(ctx context.Context, input []*schema.Message) []*schema.Message {
+		res := make([]*schema.Message, 0, len(input)+len(outerInput))
+
+		res = append(res, outerInput...)
+		res = append(res, input...)
+		return res
+	}
+}
+
 func NewAgent(ctx context.Context, persona string, tools ...tool.BaseTool) (*react.Agent, error) {
 	// create an invokable LLM instance
 	model, err := openai.NewChatModel(ctx, &openai.ChatModelConfig{
@@ -42,7 +53,7 @@ func NewAgent(ctx context.Context, persona string, tools ...tool.BaseTool) (*rea
 		Model:           model,
 		ToolsConfig:     compose.ToolsNodeConfig{Tools: tools},
 		MessageModifier: react.NewPersonaModifier(persona),
-		// StreamToolCallChecker: toolCallChecker, // uncomment it to replace the default tool call checker with custom one
+		//StreamToolCallChecker: toolCallChecker, // uncomment it to replace the default tool call checker with custom one
 	}
 	return react.NewAgent(ctx, config)
 }

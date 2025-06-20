@@ -6,6 +6,11 @@ import (
 	"github.com/zhangga/aino/internal/conf"
 )
 
+var AllCreator = []Creator{
+	NewToolLarkGetMsg,
+	// tools.NewToolLarkSendMsg,
+}
+
 var (
 	appCtx    context.Context
 	appConfig *conf.Config

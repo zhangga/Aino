@@ -18,7 +18,8 @@ func (c *Config) ValidData() bool {
 }
 
 type ServiceConfig struct {
-	HttpPort int `yaml:"http_port" json:"http_port" mapstructure:"http_port"`
+	HttpPort   int  `yaml:"http_port" json:"http_port" mapstructure:"http_port"`
+	StreamMode bool `yaml:"stream_mode" json:"stream_mode" mapstructure:"stream_mode"`
 }
 
 type LarkConfig struct {

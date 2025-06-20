@@ -11,6 +11,7 @@ type TaskType int
 
 const (
 	TaskTypeLark TaskType = iota
+	TaskTypeCard
 )
 
 type Task interface {

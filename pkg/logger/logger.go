@@ -6,11 +6,16 @@ import (
 	"go.uber.org/zap/zapcore"
 	"io"
 	"os"
+	"sync"
 )
 
 var _ ILogger = (*zap.SugaredLogger)(nil)
 
-var Default ILogger
+var (
+	seedLogger    *zap.Logger
+	defaultLogger ILogger
+	defaultInit   sync.Once
+)
 
 type ILogger interface {
 	Debug(args ...interface{})
@@ -34,91 +39,97 @@ type ILogger interface {
 	Sync() error
 }
 
-func InitLogger() {
-	writeSyncer := getLogWriter()
-	encoder := getEncoder()
-	core := zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel)
+func init() {
+	defaultInit.Do(func() {
+		writeSyncer := getLogWriter()
+		encoder := getEncoder()
+		core := zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel)
 
-	logger := zap.New(core, zap.AddCaller(), zap.AddCallerSkip(1), zap.AddStacktrace(zap.PanicLevel))
-	Default = logger.Sugar()
+		seedLogger = zap.New(core, zap.AddCaller(), zap.AddStacktrace(zap.PanicLevel))
+		defaultLogger = seedLogger.Sugar().WithOptions(zap.AddCallerSkip(1))
+	})
 }
 
 func Sync() {
-	if err := Default.Sync(); err != nil {
+	if err := defaultLogger.Sync(); err != nil {
 		panic(err)
 	}
 }
 
+func WithOptions(opts ...zap.Option) ILogger {
+	return seedLogger.WithOptions(opts...).Sugar()
+}
+
 func Debug(args ...interface{}) {
-	Default.Debug(args...)
+	defaultLogger.Debug(args...)
 }
 
 func Info(args ...interface{}) {
-	Default.Info(args...)
+	defaultLogger.Info(args...)
 }
 
 func Warn(args ...interface{}) {
-	Default.Warn(args...)
+	defaultLogger.Warn(args...)
 }
 
 func Error(args ...interface{}) {
-	Default.Error(args...)
+	defaultLogger.Error(args...)
 }
 
 func Panic(args ...interface{}) {
-	Default.Panic(args...)
+	defaultLogger.Panic(args...)
 }
 
 func Fatal(args ...interface{}) {
-	Default.Fatal(args...)
+	defaultLogger.Fatal(args...)
 }
 
 func Debugw(msg string, keysAndValues ...interface{}) {
-	Default.Debugw(msg, keysAndValues...)
+	defaultLogger.Debugw(msg, keysAndValues...)
 }
 
 func Infow(msg string, keysAndValues ...interface{}) {
-	Default.Infow(msg, keysAndValues...)
+	defaultLogger.Infow(msg, keysAndValues...)
 }
 
 func Warnw(msg string, keysAndValues ...interface{}) {
-	Default.Warnw(msg, keysAndValues...)
+	defaultLogger.Warnw(msg, keysAndValues...)
 }
 
 func Errorw(msg string, keysAndValues ...interface{}) {
-	Default.Errorw(msg, keysAndValues...)
+	defaultLogger.Errorw(msg, keysAndValues...)
 }
 
 func Panicw(msg string, keysAndValues ...interface{}) {
-	Default.Panicw(msg, keysAndValues...)
+	defaultLogger.Panicw(msg, keysAndValues...)
 }
 
 func Fatalw(msg string, keysAndValues ...interface{}) {
-	Default.Fatalw(msg, keysAndValues...)
+	defaultLogger.Fatalw(msg, keysAndValues...)
 }
 
 func Debugf(template string, args ...interface{}) {
-	Default.Debugf(template, args...)
+	defaultLogger.Debugf(template, args...)
 }
 
 func Infof(template string, args ...interface{}) {
-	Default.Infof(template, args...)
+	defaultLogger.Infof(template, args...)
 }
 
 func Warnf(template string, args ...interface{}) {
-	Default.Warnf(template, args...)
+	defaultLogger.Warnf(template, args...)
 }
 
 func Errorf(template string, args ...interface{}) {
-	Default.Errorf(template, args...)
+	defaultLogger.Errorf(template, args...)
 }
 
 func Panicf(template string, args ...interface{}) {
-	Default.Panicf(template, args...)
+	defaultLogger.Panicf(template, args...)
 }
 
 func Fatalf(template string, args ...interface{}) {
-	Default.Fatalf(template, args...)
+	defaultLogger.Fatalf(template, args...)
 }
 
 func getEncoder() zapcore.Encoder {

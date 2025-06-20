@@ -59,7 +59,6 @@ func init() {
 
 func run(cmd *cobra.Command, args []string) {
 	// 初始化日志
-	logger.InitLogger()
 	defer logger.Sync()
 
 	logger.Info("Aino service starting...")
@@ -91,7 +90,7 @@ func run(cmd *cobra.Command, args []string) {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		if err := service.RunService(ctx, Config.ServiceConfig.HttpPort); err != nil {
+		if err := service.RunService(ctx, Config.ServiceConfig, Config.LarkConfig); err != nil {
 			logger.Fatal("run service failed", zap.Error(err))
 		}
 	}()
