@@ -7,3 +7,7 @@ lark:
 llm:
   model:
   api_key:
+embed:
+  base_url:
+  api_key:
+  model:

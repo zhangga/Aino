@@ -1,0 +1,96 @@
+package main
+
+import (
+	"fmt"
+	"log"
+	"os"
+	"strings"
+
+	"github.com/joho/godotenv"
+	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
+	"github.com/spf13/viper"
+	"github.com/zhangga/aino/cmd/aino"
+	"github.com/zhangga/aino/cmd/einoagent"
+	"github.com/zhangga/aino/cmd/knowledgeindexing"
+	"github.com/zhangga/aino/conf"
+	"github.com/zhangga/aino/pkg/version"
+	logger "github.com/zhangga/aino/pkg/zlog"
+)
+
+var rootCmd = &cobra.Command{
+	Use:     "aino",
+	Short:   "run aino service",
+	Version: version.Version,
+}
+
+func init() {
+	rootCmd.AddCommand(version.Command())
+	rootCmd.AddCommand(aino.CmdRun)
+	rootCmd.AddCommand(knowledgeindexing.CmdRun)
+	rootCmd.AddCommand(einoagent.CmdRun)
+}
+
+var (
+	ConfigPath string
+)
+
+func init() {
+	rootCmd.PersistentFlags().StringVarP(&ConfigPath, "config", "c", "configs/config.yaml", "config file path")
+
+	// 日志配置
+	defaultLogCfg := logger.DefaultConfig
+	conf.GlobalConfig.LogConf = &defaultLogCfg
+	rootCmd.Flags().StringVar(&conf.GlobalConfig.LogConf.FilePath, "log.file", "./logs/app.log", "log file path")
+	rootCmd.Flags().StringVar(&conf.GlobalConfig.LogConf.Level, "log.level", "debug", "log level, eg: ENV: LOG_LEVEL=info")
+	// Embed配置
+	conf.GlobalConfig.EmbedConfig = &conf.EmbedConfig{}
+	rootCmd.Flags().StringVar(&conf.GlobalConfig.EmbedConfig.BaseURL, "embed.base_url", "", "embedding url, eg: --embed.base_url=https://ark.cn-beijing.volces.com/api/v3")
+	rootCmd.Flags().StringVar(&conf.GlobalConfig.EmbedConfig.APIKey, "embed.api_key", "", "embedding api key, eg: --embed.api_key=xxxxx")
+	rootCmd.Flags().StringVar(&conf.GlobalConfig.EmbedConfig.Model, "embed.model", "", "embedding model, eg: --embed.model=xxxxx")
+}
+
+func checkConfigPath() {
+	lastDot := strings.LastIndex(ConfigPath, ".")
+	if lastDot == -1 {
+		return
+	}
+
+	ext := ConfigPath[lastDot+1:]
+	// 有需要的话可以根据环境变换下配置文件的路径
+	NewConfigPath := fmt.Sprintf("%s.%s", ConfigPath[:lastDot], ext)
+	// 检查文件是否存在
+	if _, err := os.Stat(NewConfigPath); err == nil {
+		ConfigPath = NewConfigPath
+	}
+}
+
+func init() {
+	// 配置优先级：命令行参数 > 环境变量 >.env > 配置文件
+	checkConfigPath()
+	viper.SetConfigFile(ConfigPath)
+	if err := viper.ReadInConfig(); err != nil {
+		log.Fatalf("read config file: --config=%s failed, err=%s", ConfigPath, err)
+	}
+
+	// 2. 环境变量（中间优先级）
+	_ = godotenv.Load()
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_", "-", "_"))
+	viper.AutomaticEnv()
+
+	// 3. 命令行参数（最高优先级，只绑定实际传入的）
+	rootCmd.Flags().Visit(func(f *pflag.Flag) {
+		_ = viper.BindPFlag(f.Name, f)
+	})
+
+	// 4. 最终将配置文件内容解析到Config结构体中
+	if err := viper.Unmarshal(&conf.GlobalConfig); err != nil {
+		log.Fatalf("unmarshal config file failed, err=%s", err)
+	}
+
+	// 5. 检查必要的配置项
+	if !conf.GlobalConfig.ValidData() {
+		log.Fatalf("config validation failed: %v", conf.GlobalConfig)
+	}
+	log.Printf("load config from %s success", ConfigPath)
+}

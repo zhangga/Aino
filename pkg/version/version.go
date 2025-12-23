@@ -14,22 +14,22 @@ var (
 	BuildTime = "unknown"
 	// CommitHash is the commit hash of the project.
 	CommitHash = "unknown"
-	// Description is the description of the project.
-	Description = "Aino is a tool for managing version."
+	// CommitMessage is the commit message of the project.
+	CommitMessage = "unknown"
 )
 
-// Print 打印版本信息
-func Print() string {
+// PrettyMessage 版本信息
+func PrettyMessage() string {
 	kv := [][2]string{
 		{"Go", runtime.Version()},
 		{"Version", Version},
 		{"BuildTime", BuildTime},
 		{"CommitHash", CommitHash},
-		{"Description", Description},
+		{"CommitMessage", CommitMessage},
 	}
 	str := ""
 	for _, v := range kv {
-		str += fmt.Sprintf("%10s: %s\n", v[0], v[1])
+		str += fmt.Sprintf("%15s: %s\n", v[0], v[1])
 	}
 	return str
 }
@@ -41,7 +41,7 @@ func Command() *cobra.Command {
 		Use:   "version",
 		Short: "show the version",
 		Run: func(cmd *cobra.Command, args []string) {
-			cmd.Printf(Print())
+			cmd.Print(PrettyMessage())
 		},
 	}
 	return cmd

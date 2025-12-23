@@ -1,0 +1,364 @@
+{
+  "name": "KnowledgeIndexing",
+  "node_trigger_mode": "AllPredecessor",
+  "input_type": {
+    "title": "document.Source",
+    "description": "github.com/cloudwego/eino/components/document"
+  },
+  "output_type": {
+    "title": "[]string"
+  },
+  "gen_local_state": {},
+  "id": "Jwpklv",
+  "component": "Graph",
+  "nodes": [
+    {
+      "id": "start",
+      "key": "start",
+      "name": "Start",
+      "type": "start",
+      "layoutData": {
+        "position": {
+          "x": -295.17,
+          "y": -2.61
+        }
+      }
+    },
+    {
+      "id": "end",
+      "key": "end",
+      "name": "End",
+      "type": "end",
+      "layoutData": {
+        "position": {
+          "x": 971,
+          "y": -2.61
+        }
+      }
+    },
+    {
+      "id": "npIgyc",
+      "key": "Loader1",
+      "name": "",
+      "type": "Loader",
+      "component_schema": {
+        "name": "file",
+        "component": "Loader",
+        "component_source": "official",
+        "identifier": "github.com/cloudwego/eino-ext/components/document/loader/file",
+        "input_type": {
+          "title": "document.Source",
+          "description": ""
+        },
+        "output_type": {
+          "title": "[]*schema.Document",
+          "description": ""
+        },
+        "config": {
+          "description": "github.com/cloudwego/eino-ext/blob/main/components/document/loader/file/file_loader.go",
+          "schema": {
+            "type": "object",
+            "description": "",
+            "properties": {
+              "UseNameAsID": {
+                "type": "boolean",
+                "description": "",
+                "goDefinition": {
+                  "libraryRef": {
+                    "version": "",
+                    "module": "",
+                    "pkgPath": ""
+                  },
+                  "typeName": "bool",
+                  "kind": "bool",
+                  "isPtr": false
+                }
+              }
+            },
+            "propertyOrder": [
+              "UseNameAsID"
+            ],
+            "goDefinition": {
+              "libraryRef": {
+                "version": "",
+                "module": "",
+                "pkgPath": ""
+              },
+              "typeName": "file.FileLoaderConfig",
+              "kind": "struct",
+              "isPtr": false
+            }
+          },
+          "config_input": ""
+        },
+        "is_io_type_mutable": false,
+        "version": "1.0.0"
+      },
+      "layoutData": {
+        "position": {
+          "x": 10.95,
+          "y": -46.43
+        }
+      }
+    },
+    {
+      "id": "FtCEpL",
+      "key": "DocumentTransformer2",
+      "name": "",
+      "type": "DocumentTransformer",
+      "component_schema": {
+        "name": "markdown",
+        "component": "DocumentTransformer",
+        "component_source": "official",
+        "identifier": "github.com/cloudwego/eino-ext/components/document/transformer/splitter/markdown",
+        "input_type": {
+          "title": "[]*schema.Document",
+          "description": ""
+        },
+        "output_type": {
+          "title": "[]*schema.Document",
+          "description": ""
+        },
+        "config": {
+          "description": "github.com/cloudwego/eino-ext/blob/main/components/document/transformer/splitter/markdown/header.go",
+          "schema": {
+            "type": "object",
+            "description": "",
+            "properties": {
+              "Headers": {
+                "type": "object",
+                "description": "",
+                "additionalProperties": {
+                  "type": "string",
+                  "description": "",
+                  "goDefinition": {
+                    "libraryRef": {
+                      "version": "",
+                      "module": "",
+                      "pkgPath": ""
+                    },
+                    "typeName": "string",
+                    "kind": "string",
+                    "isPtr": false
+                  }
+                },
+                "goDefinition": {
+                  "libraryRef": {
+                    "version": "",
+                    "module": "",
+                    "pkgPath": ""
+                  },
+                  "typeName": "map[string]string",
+                  "kind": "map",
+                  "isPtr": false
+                }
+              },
+              "TrimHeaders": {
+                "type": "boolean",
+                "description": "",
+                "goDefinition": {
+                  "libraryRef": {
+                    "version": "",
+                    "module": "",
+                    "pkgPath": ""
+                  },
+                  "typeName": "bool",
+                  "kind": "bool",
+                  "isPtr": false
+                }
+              }
+            },
+            "propertyOrder": [
+              "Headers",
+              "TrimHeaders"
+            ],
+            "goDefinition": {
+              "libraryRef": {
+                "version": "",
+                "module": "",
+                "pkgPath": ""
+              },
+              "typeName": "markdown.HeaderConfig",
+              "kind": "struct",
+              "isPtr": false
+            }
+          },
+          "config_input": ""
+        },
+        "is_io_type_mutable": false,
+        "version": "1.0.0"
+      },
+      "layoutData": {
+        "position": {
+          "x": 349,
+          "y": -46.98
+        }
+      }
+    },
+    {
+      "id": "Zqt6N5",
+      "key": "Indexer1",
+      "name": "",
+      "type": "Indexer",
+      "component_schema": {
+        "name": "redis",
+        "component": "Indexer",
+        "component_source": "official",
+        "identifier": "github.com/cloudwego/eino-ext/components/indexer/redis",
+        "input_type": {
+          "title": "[]*schema.Document",
+          "description": ""
+        },
+        "output_type": {
+          "title": "[]string",
+          "description": ""
+        },
+        "slots": [
+          {
+            "component": "Embedding",
+            "field_loc_path": "Embedding",
+            "multiple": false,
+            "required": false,
+            "component_items": [
+              {
+                "name": "Embedding",
+                "component": "Embedding",
+                "component_source": "custom",
+                "input_type": {
+                  "title": "[]string",
+                  "description": ""
+                },
+                "output_type": {
+                  "title": "[][]float64",
+                  "description": ""
+                },
+                "is_io_type_mutable": false,
+                "version": "1.0.0",
+                "id": "v-hMaH",
+                "layoutData": {
+                  "isSlotNode": true,
+                  "position": {
+                    "x": 992,
+                    "y": 119
+                  }
+                }
+              }
+            ],
+            "go_definition": {
+              "libraryRef": {
+                "version": "v0.3.6",
+                "module": "github.com/cloudwego/eino",
+                "pkgPath": "github.com/cloudwego/eino/components/embedding"
+              },
+              "typeName": "embedding.Embedder",
+              "kind": "interface",
+              "isPtr": false
+            }
+          }
+        ],
+        "config": {
+          "description": "github.com/cloudwego/eino-ext/blob/main/components/indexer/redis/indexer.go",
+          "schema": {
+            "type": "object",
+            "description": "",
+            "properties": {
+              "BatchSize": {
+                "type": "number",
+                "description": "",
+                "goDefinition": {
+                  "libraryRef": {
+                    "version": "",
+                    "module": "",
+                    "pkgPath": ""
+                  },
+                  "typeName": "int",
+                  "kind": "int",
+                  "isPtr": false
+                }
+              },
+              "KeyPrefix": {
+                "type": "string",
+                "description": "",
+                "goDefinition": {
+                  "libraryRef": {
+                    "version": "",
+                    "module": "",
+                    "pkgPath": ""
+                  },
+                  "typeName": "string",
+                  "kind": "string",
+                  "isPtr": false
+                }
+              }
+            },
+            "propertyOrder": [
+              "KeyPrefix",
+              "BatchSize"
+            ],
+            "goDefinition": {
+              "libraryRef": {
+                "version": "",
+                "module": "",
+                "pkgPath": ""
+              },
+              "typeName": "redis.IndexerConfig",
+              "kind": "struct",
+              "isPtr": false
+            }
+          },
+          "config_input": ""
+        },
+        "is_io_type_mutable": false,
+        "version": "1.0.0"
+      },
+      "layoutData": {
+        "position": {
+          "x": 675.89,
+          "y": -62.97
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "",
+      "name": "",
+      "sourceWorkflowNodeId": "start",
+      "targetWorkflowNodeId": "npIgyc",
+      "source_node_key": "start",
+      "target_node_key": "Loader1"
+    },
+    {
+      "id": "",
+      "name": "",
+      "sourceWorkflowNodeId": "Zqt6N5",
+      "targetWorkflowNodeId": "end",
+      "source_node_key": "Indexer1",
+      "target_node_key": "end"
+    },
+    {
+      "id": "",
+      "name": "",
+      "sourceWorkflowNodeId": "npIgyc",
+      "targetWorkflowNodeId": "FtCEpL",
+      "source_node_key": "Loader1",
+      "target_node_key": "DocumentTransformer2"
+    },
+    {
+      "id": "",
+      "name": "",
+      "sourceWorkflowNodeId": "FtCEpL",
+      "targetWorkflowNodeId": "Zqt6N5",
+      "source_node_key": "DocumentTransformer2",
+      "target_node_key": "Indexer1"
+    }
+  ],
+  "branches": [],
+  "nodeCounter": {
+    "Loader": 2,
+    "DocumentTransformer": 3,
+    "Indexer": 2,
+    "default": 3,
+    "Lambda": 4
+  }
+}

@@ -7,7 +7,7 @@ run:
   tests: false
 
 output:
-  path-prefix: "ratelimiter"
+  path-prefix: "aino"
 
 linters:
   disable-all: true
