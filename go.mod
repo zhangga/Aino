@@ -3,12 +3,13 @@ module github.com/zhangga/aino
 go 1.25.5
 
 require (
-	github.com/bytedance/sonic v1.14.1
-	github.com/cloudwego/eino v0.7.11
+	github.com/bytedance/sonic v1.14.2
+	github.com/cloudwego/eino v0.7.12
 	github.com/joho/godotenv v1.5.1
 	github.com/redis/go-redis/v9 v9.10.0
 	github.com/spf13/cobra v1.10.2
 	github.com/spf13/viper v1.21.0
+	github.com/zhangga/aino/aino_ext/components/embedding/common v0.0.0-20251224101045-368b97ab6973
 	go.uber.org/zap v1.27.1
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 )
@@ -18,11 +19,15 @@ require (
 	github.com/buger/jsonparser v1.1.1 // indirect
 	github.com/bytedance/gopkg v0.1.3 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
+	github.com/cloudwego/eino-ext/devops v0.1.8 // indirect
+	github.com/cloudwego/hertz v0.10.3 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/eino-contrib/jsonschema v1.0.3 // indirect
 	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
+	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
+	github.com/matoous/go-nanoid v1.5.1 // indirect
 	github.com/rogpeppe/go-internal v1.11.0 // indirect
 	github.com/volcengine/volc-sdk-golang v1.0.23 // indirect
 	github.com/volcengine/volcengine-go-sdk v1.1.49 // indirect
@@ -30,13 +35,13 @@ require (
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/sync v0.19.0 // indirect
 	golang.org/x/term v0.32.0 // indirect
-	google.golang.org/protobuf v1.31.0 // indirect
+	google.golang.org/protobuf v1.34.1 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
 
 require (
-	github.com/bytedance/sonic/loader v0.3.0 // indirect
+	github.com/bytedance/sonic/loader v0.4.0 // indirect
 	github.com/cloudwego/base64x v0.1.6 // indirect
 	github.com/cloudwego/eino-ext/components/document/loader/file v0.0.0-20251223041451-fede3afb5715
 	github.com/cloudwego/eino-ext/components/document/transformer/splitter/markdown v0.0.0-20251223041451-fede3afb5715

@@ -35,6 +35,7 @@ var (
 	ConfigPath string
 )
 
+// 需要绑定命令行参数的在这里注册
 func init() {
 	rootCmd.PersistentFlags().StringVarP(&ConfigPath, "config", "c", "configs/config.yaml", "config file path")
 
@@ -43,11 +44,23 @@ func init() {
 	conf.GlobalConfig.LogConf = &defaultLogCfg
 	rootCmd.Flags().StringVar(&conf.GlobalConfig.LogConf.FilePath, "log.file", "./logs/app.log", "log file path")
 	rootCmd.Flags().StringVar(&conf.GlobalConfig.LogConf.Level, "log.level", "debug", "log level, eg: ENV: LOG_LEVEL=info")
+	// 服务配置
+	conf.GlobalConfig.ServiceConf = &conf.ServiceConfig{}
+	rootCmd.Flags().IntVar(&conf.GlobalConfig.ServiceConf.HttpPort, "service.http_port", 8080, "service http port, eg: --service.http_port=8080")
+	rootCmd.Flags().BoolVar(&conf.GlobalConfig.ServiceConf.EinoDebug, "service.eino_debug", false, "eino debug mode, eg: --service.eino_debug=true")
+	rootCmd.Flags().BoolVar(&conf.GlobalConfig.ServiceConf.StreamMode, "service.stream_mode", false, "stream mode, eg: --service.stream_mode=true")
 	// Embed配置
 	conf.GlobalConfig.EmbedConfig = &conf.EmbedConfig{}
 	rootCmd.Flags().StringVar(&conf.GlobalConfig.EmbedConfig.BaseURL, "embed.base_url", "", "embedding url, eg: --embed.base_url=https://ark.cn-beijing.volces.com/api/v3")
 	rootCmd.Flags().StringVar(&conf.GlobalConfig.EmbedConfig.APIKey, "embed.api_key", "", "embedding api key, eg: --embed.api_key=xxxxx")
 	rootCmd.Flags().StringVar(&conf.GlobalConfig.EmbedConfig.Model, "embed.model", "", "embedding model, eg: --embed.model=xxxxx")
+	// Indexer配置
+	conf.GlobalConfig.IndexerConf = &conf.IndexerConfig{}
+	rootCmd.Flags().StringVar(&conf.GlobalConfig.IndexerConf.RedisAddr, "indexer.redis_addr", "localhost:6379", "redis address, eg: --indexer.redis_addr=localhost:6379")
+	rootCmd.Flags().StringVar(&conf.GlobalConfig.IndexerConf.RedisPwd, "indexer.redis_pwd", "", "redis password, eg: --indexer.redis_pwd=xxxxx")
+	rootCmd.Flags().StringVar(&conf.GlobalConfig.IndexerConf.RedisPrefix, "indexer.redis_prefix", "knowledge:doc:", "redis key prefix, eg: --indexer.redis_prefix=knowledge:doc:")
+	rootCmd.Flags().IntVar(&conf.GlobalConfig.IndexerConf.Dimension, "indexer.dimension", 4096, "vector dimension, eg: --indexer.dimension=4096")
+	rootCmd.Flags().IntVar(&conf.GlobalConfig.IndexerConf.Protocol, "indexer.protocol", 2, "redis protocol version, eg: --indexer.protocol=2")
 }
 
 func checkConfigPath() {

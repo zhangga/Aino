@@ -8,9 +8,17 @@ type IConfig interface {
 	ValidData() bool
 }
 type Config struct {
-	LogConf     *logger.Config `mapstructure:"log" json:"log" yaml:"log"`       // 日志相关配置
-	EmbedConfig *EmbedConfig   `mapstructure:"embed" json:"embed" yaml:"embed"` // 向量配置
-	IndexerConf *IndexerConfig `mapstructure:"indexer" json:"indexer" yaml:"indexer"`
+	LogConf     *logger.Config `mapstructure:"log" json:"log" yaml:"log"`             // 日志相关配置
+	ServiceConf *ServiceConfig `mapstructure:"service" json:"service" yaml:"service"` // 服务相关配置
+	EmbedConfig *EmbedConfig   `mapstructure:"embed" json:"embed" yaml:"embed"`       // 向量配置
+	IndexerConf *IndexerConfig `mapstructure:"indexer" json:"indexer" yaml:"indexer"` // 索引配置
+}
+
+type ServiceConfig struct {
+	HttpPort      int    `mapstructure:"http_port" json:"http_port" yaml:"http_port"`                   // 服务端口
+	EinoDebug     bool   `mapstructure:"eino_debug" json:"eino_debug" yaml:"eino_debug"`                // Eino调试模式
+	APMPlusAppKey string `mapstructure:"apmplus_app_key" json:"apmplus_app_key" yaml:"apmplus_app_key"` // APMPlus应用Key
+	StreamMode    bool   `mapstructure:"stream_mode" json:"stream_mode" yaml:"stream_mode"`             // 流式模式
 }
 
 type EmbedConfig struct {

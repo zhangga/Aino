@@ -1,5 +1,7 @@
 service:
   http_port: 8088
+  eino_debug: true
+  apmplus_app_key: "your_apmplus_app_key"
   stream_mode: true
 lark:
   app_id:

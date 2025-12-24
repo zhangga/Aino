@@ -2,7 +2,7 @@
   <configuration default="false" name="aino" type="GoApplicationRunConfiguration" factoryName="Go Application">
     <module name="Aino" />
     <working_directory value="$PROJECT_DIR$" />
-    <parameters value="knowledge" />
+    <parameters value="einoagent" />
     <kind value="PACKAGE" />
     <package value="github.com/zhangga/aino/cmd" />
     <directory value="$PROJECT_DIR$" />

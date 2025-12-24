@@ -9,9 +9,10 @@ import (
 	"github.com/bytedance/gopkg/util/logger"
 	"github.com/bytedance/sonic"
 	"github.com/cloudwego/eino/components/embedding"
-	"github.com/zhangga/aino/conf"
 	"github.com/zhangga/aino/pkg/httppkg"
 )
+
+var _ embedding.Embedder = (*EmbeddingImpl)(nil)
 
 type EmbeddingImpl struct {
 	config *EmbeddingConfig
@@ -54,13 +55,8 @@ type EmbeddingResponse struct {
 	} `json:"usage"`
 }
 
-func newEmbedding(ctx context.Context) (emb embedding.Embedder, err error) {
+func NewEmbedder(ctx context.Context, config *EmbeddingConfig) (emb embedding.Embedder, err error) {
 	// TODO Modify component configuration here.
-	config := &EmbeddingConfig{
-		BaseURL: conf.GlobalConfig.EmbedConfig.BaseURL,
-		APIKey:  conf.GlobalConfig.EmbedConfig.APIKey,
-		Model:   conf.GlobalConfig.EmbedConfig.Model,
-	}
 	emb = &EmbeddingImpl{config: config}
 	return emb, nil
 }
