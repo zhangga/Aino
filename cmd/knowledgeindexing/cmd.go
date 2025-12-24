@@ -9,7 +9,7 @@ import (
 
 	"github.com/cloudwego/eino/components/document"
 	"github.com/spf13/cobra"
-	"github.com/zhangga/aino/eino_workflow/knowledgeindexing"
+	"github.com/zhangga/aino/internal/eino_workflow/knowledgeindexing"
 	logger "github.com/zhangga/aino/pkg/zlog"
 )
 
