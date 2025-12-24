@@ -10,7 +10,12 @@ import (
 // newDocumentTransformer component initialization function of node 'DocumentTransformer2' in graph 'KnowledgeIndexing'
 func newDocumentTransformer(ctx context.Context) (tfr document.Transformer, err error) {
 	// TODO Modify component configuration here.
-	config := &markdown.HeaderConfig{}
+	config := &markdown.HeaderConfig{
+		Headers: map[string]string{
+			"#": "title",
+		},
+		TrimHeaders: false,
+	}
 	tfr, err = markdown.NewHeaderSplitter(ctx, config)
 	if err != nil {
 		return nil, err

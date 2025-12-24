@@ -11,3 +11,9 @@ embed:
   base_url:
   api_key:
   model:
+indexer:
+  redis_addr:
+  redis_pwd:
+  redis_prefix: "knowledge:doc:"
+  dimension: 4096
+  protocol: 2
