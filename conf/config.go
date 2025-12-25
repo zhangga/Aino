@@ -16,6 +16,7 @@ type Config struct {
 
 type ServiceConfig struct {
 	HttpPort      int    `mapstructure:"http_port" json:"http_port" yaml:"http_port"`                   // 服务端口
+	Debug         bool   `mapstructure:"debug" json:"debug" yaml:"debug"`                               // 调试模式
 	EinoDebug     bool   `mapstructure:"eino_debug" json:"eino_debug" yaml:"eino_debug"`                // Eino调试模式
 	APMPlusAppKey string `mapstructure:"apmplus_app_key" json:"apmplus_app_key" yaml:"apmplus_app_key"` // APMPlus应用Key
 	StreamMode    bool   `mapstructure:"stream_mode" json:"stream_mode" yaml:"stream_mode"`             // 流式模式
