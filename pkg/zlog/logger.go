@@ -40,11 +40,15 @@ type Logger interface {
 	Sync() error
 }
 
-func InitLogConfig(config Config) {
+func InitDefaultLogger(config Config) {
 	defaultInit.Do(func() {
 		writeSyncer := getLogWriter(config)
 		encoder := getEncoder()
-		core := zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel)
+		level, err := zapcore.ParseLevel(config.Level)
+		if err != nil {
+			level = zapcore.DebugLevel
+		}
+		core := zapcore.NewCore(encoder, writeSyncer, level)
 
 		seedLogger = zap.New(core,
 			zap.AddCaller(),
@@ -56,12 +60,29 @@ func InitLogConfig(config Config) {
 	})
 }
 
+// NewLogger creates a new Logger based on the provided configuration.
+func NewLogger(config Config) Logger {
+	writeSyncer := getLogWriter(config)
+	encoder := getEncoder()
+	level, err := zapcore.ParseLevel(config.Level)
+	if err != nil {
+		level = zapcore.DebugLevel
+	}
+	core := zapcore.NewCore(encoder, writeSyncer, level)
+	logger := zap.New(core,
+		zap.AddCaller(),
+		zap.AddStacktrace(zap.PanicLevel),
+	)
+	return logger.WithOptions(zap.AddCallerSkip(1)).Sugar()
+}
+
 func Sync() {
 	if err := defaultLogger.Sync(); err != nil {
 		panic(err)
 	}
 }
 
+// WithOptions creates a new Logger based on the seedLogger with the provided options.
 func WithOptions(opts ...zap.Option) Logger {
 	return seedLogger.WithOptions(opts...).Sugar()
 }

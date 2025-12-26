@@ -20,7 +20,7 @@ var CmdRun = &cobra.Command{
 }
 
 func run(cmd *cobra.Command, args []string) {
-	logger.InitLogConfig(logger.Config{FilePath: "logs/knowledgeindexing.log", Level: "debug"})
+	logger.InitDefaultLogger(logger.Config{FilePath: "logs/knowledgeindexing.log", Level: "debug"})
 	defer logger.Sync()
 
 	logger.Info("starting knowledgeindexing service...")

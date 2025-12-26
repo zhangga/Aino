@@ -15,11 +15,14 @@ type Config struct {
 }
 
 type ServiceConfig struct {
-	HttpPort      int    `mapstructure:"http_port" json:"http_port" yaml:"http_port"`                   // 服务端口
-	Debug         bool   `mapstructure:"debug" json:"debug" yaml:"debug"`                               // 调试模式
-	EinoDebug     bool   `mapstructure:"eino_debug" json:"eino_debug" yaml:"eino_debug"`                // Eino调试模式
-	APMPlusAppKey string `mapstructure:"apmplus_app_key" json:"apmplus_app_key" yaml:"apmplus_app_key"` // APMPlus应用Key
-	StreamMode    bool   `mapstructure:"stream_mode" json:"stream_mode" yaml:"stream_mode"`             // 流式模式
+	HttpPort          int    `mapstructure:"http_port" json:"http_port" yaml:"http_port"`                               // 服务端口
+	Debug             bool   `mapstructure:"debug" json:"debug" yaml:"debug"`                                           // 调试模式
+	EinoDebug         bool   `mapstructure:"eino_debug" json:"eino_debug" yaml:"eino_debug"`                            // Eino调试模式
+	StreamMode        bool   `mapstructure:"stream_mode" json:"stream_mode" yaml:"stream_mode"`                         // 流式模式
+	APMPlusAppKey     string `mapstructure:"apmplus_app_key" json:"apmplus_app_key" yaml:"apmplus_app_key"`             // APMPlus应用Key
+	APMPlusRegion     string `mapstructure:"apmplus_region" json:"apmplus_region" yaml:"apmplus_region"`                // APMPlus区域
+	LangfusePublicKey string `mapstructure:"langfuse_public_key" json:"langfuse_public_key" yaml:"langfuse_public_key"` // Langf使用公钥
+	LangfuseSecretKey string `mapstructure:"langfuse_secret_key" json:"langfuse_secret_key" yaml:"langfuse_secret_key"` // Langf使用私钥
 }
 
 type EmbedConfig struct {

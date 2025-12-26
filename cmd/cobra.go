@@ -47,8 +47,13 @@ func init() {
 	// 服务配置
 	conf.GlobalConfig.ServiceConf = &conf.ServiceConfig{}
 	rootCmd.Flags().IntVar(&conf.GlobalConfig.ServiceConf.HttpPort, "service.http_port", 8080, "service http port, eg: --service.http_port=8080")
+	rootCmd.Flags().BoolVar(&conf.GlobalConfig.ServiceConf.Debug, "service.debug", true, "debug mode, eg: --service.debug=true")
 	rootCmd.Flags().BoolVar(&conf.GlobalConfig.ServiceConf.EinoDebug, "service.eino_debug", false, "eino debug mode, eg: --service.eino_debug=true")
 	rootCmd.Flags().BoolVar(&conf.GlobalConfig.ServiceConf.StreamMode, "service.stream_mode", false, "stream mode, eg: --service.stream_mode=true")
+	rootCmd.Flags().StringVar(&conf.GlobalConfig.ServiceConf.APMPlusAppKey, "service.apmplus_app_key", "", "APMPlus App Key, eg: --service.apmplus_app_key=xxxxx")
+	rootCmd.Flags().StringVar(&conf.GlobalConfig.ServiceConf.APMPlusRegion, "service.apmplus_region", "cn-beijing", "APMPlus Region, eg: --service.apmplus_region=cn-beijing")
+	rootCmd.Flags().StringVar(&conf.GlobalConfig.ServiceConf.LangfusePublicKey, "service.langfuse_public_key", "", "Langfuse Public Key, eg: --service.langfuse_public_key=xxxxx")
+	rootCmd.Flags().StringVar(&conf.GlobalConfig.ServiceConf.LangfuseSecretKey, "service.langfuse_secret_key", "", "Langfuse Secret Key, eg: --service.langfuse_secret_key=xxxxx")
 	// Embed配置
 	conf.GlobalConfig.EmbedConfig = &conf.EmbedConfig{}
 	rootCmd.Flags().StringVar(&conf.GlobalConfig.EmbedConfig.BaseURL, "embed.base_url", "", "embedding url, eg: --embed.base_url=https://ark.cn-beijing.volces.com/api/v3")

@@ -8,12 +8,15 @@ import (
 	"github.com/cloudwego/eino-ext/devops"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
+	"github.com/hertz-contrib/obs-opentelemetry/provider"
+	hertztracing "github.com/hertz-contrib/obs-opentelemetry/tracing"
 	"github.com/spf13/cobra"
 	"github.com/zhangga/aino/cmd/einoagent/agent"
 	"github.com/zhangga/aino/cmd/einoagent/task"
 	"github.com/zhangga/aino/conf"
 	"github.com/zhangga/aino/pkg/utils"
 	logger "github.com/zhangga/aino/pkg/zlog"
+	"go.opentelemetry.io/otel/attribute"
 )
 
 var CmdRun = &cobra.Command{
@@ -23,7 +26,7 @@ var CmdRun = &cobra.Command{
 }
 
 func run(cmd *cobra.Command, args []string) {
-	logger.InitLogConfig(logger.Config{FilePath: "logs/einoagent.log", Level: "debug"})
+	logger.InitDefaultLogger(logger.Config{FilePath: "logs/einoagent.log", Level: "debug"})
 	defer logger.Sync()
 
 	logger.Info("starting einoagent service...")
@@ -31,9 +34,9 @@ func run(cmd *cobra.Command, args []string) {
 
 	// Enable Eino Debug Mode if configured
 	if conf.GlobalConfig.ServiceConf.EinoDebug {
-		logger.Info("Eino Debug Mode is enabled.")
+		logger.Info("[eino dev] Eino Debug Mode is enabled.")
 		if err := devops.Init(ctx); err != nil {
-			logger.Errorf("Failed to initialize devops: %s", err)
+			logger.Errorf("[eino dev] init failed, err=%v", err)
 		}
 	}
 
@@ -41,10 +44,19 @@ func run(cmd *cobra.Command, args []string) {
 	h := server.Default(server.WithHostPorts(fmt.Sprintf(":%d", conf.GlobalConfig.ServiceConf.HttpPort)))
 	h.Use(LogMiddleware())
 
-	//TODO APMPLUS
+	// APMPLUS
 	if len(conf.GlobalConfig.ServiceConf.APMPlusAppKey) > 0 {
-		logger.Info("APMPlus is enabled.")
-		// apmplus.InitAPMPlus(conf.GlobalConfig.ServiceConf.APMPlusAppKey, h)
+		logger.Info("[eino apmplus] APMPlus is enabled.")
+		_ = provider.NewOpenTelemetryProvider(
+			provider.WithServiceName("eino-assistant"),
+			provider.WithExportEndpoint(fmt.Sprintf(agent.APMPlusHost, conf.GlobalConfig.ServiceConf.APMPlusRegion)),
+			provider.WithInsecure(),
+			provider.WithHeaders(map[string]string{"X-ByteAPM-AppKey": conf.GlobalConfig.ServiceConf.APMPlusAppKey}),
+			provider.WithResourceAttribute(attribute.String("apmplus.business_type", "llm")),
+		)
+		tracer, cfg := hertztracing.NewServerTracer()
+		h = server.Default(server.WithHostPorts(fmt.Sprintf(":%d", conf.GlobalConfig.ServiceConf.HttpPort)), tracer)
+		h.Use(LogMiddleware(), hertztracing.ServerMiddleware(cfg))
 	}
 
 	// 注册 task 路由
@@ -57,14 +69,18 @@ func run(cmd *cobra.Command, args []string) {
 	if err := agent.BindRoutes(agentGroup); err != nil {
 		logger.Fatalf("failed to bind agent routes: %v", err)
 	}
+
 	// Redirect root path to /agent
 	h.GET("/", func(ctx context.Context, c *app.RequestContext) {
 		c.Redirect(302, []byte("/agent"))
 	})
 
+	logger.Infof("server is running at http://%s:%d", utils.LocalIP, conf.GlobalConfig.ServiceConf.HttpPort)
+
 	// 启动服务器
 	h.Spin()
 }
+
 func LogMiddleware() app.HandlerFunc {
 	return func(ctx context.Context, c *app.RequestContext) {
 		start := time.Now()
