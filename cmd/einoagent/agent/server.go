@@ -15,6 +15,7 @@ import (
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 	"github.com/cloudwego/hertz/pkg/route"
 	"github.com/hertz-contrib/sse"
+	"github.com/zhangga/aino/pkg/mempkg"
 	"github.com/zhangga/aino/pkg/utils"
 	logger "github.com/zhangga/aino/pkg/zlog"
 )
@@ -129,11 +130,50 @@ outer:
 }
 
 func HandleHistory(ctx context.Context, c *app.RequestContext) {
+	// query: id => get history, none => list all
+	id := c.Query("id")
 
+	if id == "" {
+		ids := mempkg.GetDefaultMemory().ListConversations()
+
+		c.JSON(consts.StatusOK, map[string]interface{}{
+			"ids": ids,
+		})
+		return
+	}
+
+	conversation := mempkg.GetDefaultMemory().GetConversation(id, false)
+	if conversation == nil {
+		c.JSON(consts.StatusNotFound, map[string]string{
+			"error": "conversation not found",
+		})
+		return
+	}
+
+	c.JSON(consts.StatusOK, map[string]interface{}{
+		"conversation": conversation,
+	})
 }
 
 func HandleDeleteHistory(ctx context.Context, c *app.RequestContext) {
+	id := c.Query("id")
+	if id == "" {
+		c.JSON(consts.StatusBadRequest, map[string]string{
+			"error": "missing id parameter",
+		})
+		return
+	}
 
+	if err := mempkg.GetDefaultMemory().DeleteConversation(id); err != nil {
+		c.JSON(consts.StatusInternalServerError, map[string]string{
+			"status": "error",
+			"error":  err.Error(),
+		})
+		return
+	}
+	c.JSON(consts.StatusOK, map[string]string{
+		"status": "success",
+	})
 }
 
 // HandleLog 实时日志处理
