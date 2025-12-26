@@ -6,7 +6,7 @@ replace google.golang.org/genproto => google.golang.org/genproto v0.0.0-20251222
 
 require (
 	github.com/bytedance/sonic v1.14.2
-	github.com/cloudwego/eino v0.7.12
+	github.com/cloudwego/eino v0.7.13
 	github.com/cloudwego/eino-ext/callbacks/apmplus v0.0.2
 	github.com/cloudwego/eino-ext/callbacks/langfuse v0.0.0-20251223041451-fede3afb5715
 	github.com/cloudwego/eino-ext/devops v0.1.8
@@ -19,6 +19,7 @@ require (
 	github.com/spf13/cobra v1.10.2
 	github.com/spf13/viper v1.21.0
 	github.com/zhangga/aino/aino_ext/components/embedding/common v0.0.0-20251224101045-368b97ab6973
+	github.com/zhangga/aino/aino_ext/tools/task v0.0.0-20251226101856-7f9b28ae6fcc
 	go.opentelemetry.io/otel v1.38.0
 	go.uber.org/zap v1.27.1
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1

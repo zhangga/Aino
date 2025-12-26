@@ -508,8 +508,8 @@ github.com/clbanning/x2j v0.0.0-20191024224557-825249438eec/go.mod h1:jMjuTZXRI4
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
 github.com/cloudwego/base64x v0.1.6 h1:t11wG9AECkCDk5fMSoxmufanudBtJ+/HemLstXDLI2M=
 github.com/cloudwego/base64x v0.1.6/go.mod h1:OFcloc187FXDaYHvrNIjxSe8ncn0OOM8gEHfghB2IPU=
-github.com/cloudwego/eino v0.7.12 h1:5MAKK4KkLDfpYp7kJd7U3Bx6g4jJa9Z96fmDP5s3ePg=
-github.com/cloudwego/eino v0.7.12/go.mod h1:nA8Vacmuqv3pqKBQbTWENBLQ8MmGmPt/WqiyLeB8ohQ=
+github.com/cloudwego/eino v0.7.13 h1:Ku7hY+83gGJJjf4On3UgqjC57UcA+DXe0tqAZiNDDew=
+github.com/cloudwego/eino v0.7.13/go.mod h1:nA8Vacmuqv3pqKBQbTWENBLQ8MmGmPt/WqiyLeB8ohQ=
 github.com/cloudwego/eino-ext/callbacks/apmplus v0.0.2 h1:udMML2dkBA8hJ/+tHLvbHfpmojL/1DqFoNGAMiHu4Hs=
 github.com/cloudwego/eino-ext/callbacks/apmplus v0.0.2/go.mod h1:GPqb5jLcgM35XpiyHLCUb7qsb7j/TE/Yqa0+CkpktWo=
 github.com/cloudwego/eino-ext/callbacks/langfuse v0.0.0-20251223041451-fede3afb5715 h1:GbQ3/DeXPf562pPiOWNPL3WEyqmE29gqXTV9BnFMiW8=
@@ -1240,6 +1240,8 @@ github.com/zeebo/errs v1.4.0/go.mod h1:sgbWHsvVuTPHcqJJGQ1WhI5KbWlHYz+2+2C/LSEtC
 github.com/zeebo/xxh3 v1.0.2/go.mod h1:5NWz9Sef7zIDm2JHfFlcQvNekmcEl9ekUZQQKCYaDcA=
 github.com/zhangga/aino/aino_ext/components/embedding/common v0.0.0-20251224101045-368b97ab6973 h1:HjBGI05ZQoCTddjq5SYqJ/sOQo/kAu/V2Z9cg6AzrOI=
 github.com/zhangga/aino/aino_ext/components/embedding/common v0.0.0-20251224101045-368b97ab6973/go.mod h1:smj5YbbIUz84qc5zd+TPZXwndynn8+jRbaRz4Q76SJ4=
+github.com/zhangga/aino/aino_ext/tools/task v0.0.0-20251226101856-7f9b28ae6fcc h1:wM4kVM8fQLnEyhmhvpldDgIoqmt+AWl5YC9zP090npM=
+github.com/zhangga/aino/aino_ext/tools/task v0.0.0-20251226101856-7f9b28ae6fcc/go.mod h1:PDq8Q3PN6v8cj/TF8dISB05jTsc/d0zpPSaVAK0G8V4=
 go.einride.tech/aip v0.67.1/go.mod h1:ZGX4/zKw8dcgzdLsrvpOOGxfxI2QSk12SlP7d6c0/XI=
 go.einride.tech/aip v0.68.1/go.mod h1:XaFtaj4HuA3Zwk9xoBtTWgNubZ0ZZXv9BZJCkuKuWbg=
 go.einride.tech/aip v0.73.0/go.mod h1:Mj7rFbmXEgw0dq1dqJ7JGMvYCZZVxmGOR3S4ZcV5LvQ=
