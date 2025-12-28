@@ -19,7 +19,6 @@ require (
 	github.com/redis/go-redis/v9 v9.10.0
 	github.com/spf13/cobra v1.10.2
 	github.com/spf13/viper v1.21.0
-	github.com/zhangga/aino/aino_ext/components/embedding/common v0.0.0-20251224101045-368b97ab6973
 	github.com/zhangga/aino/aino_ext/tools v0.0.0-20251228142533-3cdfee407d95
 	go.opentelemetry.io/otel v1.38.0
 	go.uber.org/zap v1.27.1

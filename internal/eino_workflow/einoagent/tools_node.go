@@ -5,8 +5,9 @@ import (
 
 	"github.com/cloudwego/eino-ext/components/tool/duckduckgo/v2"
 	"github.com/cloudwego/eino/components/tool"
-	"github.com/zhangga/aino/aino_ext/tools/git"
-	"github.com/zhangga/aino/aino_ext/tools/open"
+	"github.com/zhangga/aino/aino_ext/tools/einotool"
+	"github.com/zhangga/aino/aino_ext/tools/filetool"
+	"github.com/zhangga/aino/aino_ext/tools/gittool"
 	"github.com/zhangga/aino/aino_ext/tools/task"
 )
 
@@ -65,11 +66,11 @@ func NewDDGSearch(ctx context.Context, config *duckduckgo.Config) (tn tool.BaseT
 }
 
 func NewOpenFileTool(ctx context.Context) (tn tool.BaseTool, err error) {
-	return open.NewOpenFileTool(ctx, nil)
+	return filetool.NewOpenFileTool(ctx, nil)
 }
 
 func NewGitCloneFile(ctx context.Context) (tn tool.BaseTool, err error) {
-	return git.NewGitCloneFile(ctx, nil)
+	return gittool.NewGitCloneFile(ctx, nil)
 }
 
 func NewEinoAssistantTool(ctx context.Context) (tn tool.BaseTool, err error) {

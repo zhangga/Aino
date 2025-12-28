@@ -1,4 +1,4 @@
-package open
+package filetool
 
 import (
 	"context"
