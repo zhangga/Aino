@@ -1,9 +1,9 @@
-module github.com/zhangga/aino/aino_ext/tools/task
+module github.com/zhangga/aino/aino_ext/tools
 
 go 1.25.5
 
 require (
-	github.com/cloudwego/eino v0.7.13
+	github.com/cloudwego/eino v0.7.14
 	github.com/google/uuid v1.6.0
 )
 

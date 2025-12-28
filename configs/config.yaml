@@ -5,12 +5,13 @@ service:
   stream_mode: true
   apmplus_app_key: "your_apmplus_app_key"
   apmplus_region: "cn-beijing"
-  langfuse_public_key: "your_langfuse_public_key"
-  langfuse_secret_key: "your_langfuse_secret_key"
+  langfuse_public_key: ""
+  langfuse_secret_key: ""
 lark:
   app_id:
   app_secret:
 llm:
+  base_url:
   model:
   api_key:
 embed:

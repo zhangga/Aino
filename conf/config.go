@@ -10,7 +10,8 @@ type IConfig interface {
 type Config struct {
 	LogConf     *logger.Config `mapstructure:"log" json:"log" yaml:"log"`             // 日志相关配置
 	ServiceConf *ServiceConfig `mapstructure:"service" json:"service" yaml:"service"` // 服务相关配置
-	EmbedConfig *EmbedConfig   `mapstructure:"embed" json:"embed" yaml:"embed"`       // 向量配置
+	LLMConf     *LLMConfig     `mapstructure:"llm" json:"llm" yaml:"llm"`             // 大模型配置
+	EmbedConf   *EmbedConfig   `mapstructure:"embed" json:"embed" yaml:"embed"`       // 向量配置
 	IndexerConf *IndexerConfig `mapstructure:"indexer" json:"indexer" yaml:"indexer"` // 索引配置
 }
 
@@ -23,6 +24,12 @@ type ServiceConfig struct {
 	APMPlusRegion     string `mapstructure:"apmplus_region" json:"apmplus_region" yaml:"apmplus_region"`                // APMPlus区域
 	LangfusePublicKey string `mapstructure:"langfuse_public_key" json:"langfuse_public_key" yaml:"langfuse_public_key"` // Langf使用公钥
 	LangfuseSecretKey string `mapstructure:"langfuse_secret_key" json:"langfuse_secret_key" yaml:"langfuse_secret_key"` // Langf使用私钥
+}
+
+type LLMConfig struct {
+	BaseURL string `mapstructure:"base_url" json:"base_url" yaml:"base_url"` // 大模型服务地址
+	Model   string `mapstructure:"model" json:"model" yaml:"model"`          // 大模型名称
+	APIKey  string `mapstructure:"api_key" json:"api_key" yaml:"api_key"`    // 大模型API Key
 }
 
 type EmbedConfig struct {

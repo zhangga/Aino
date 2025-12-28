@@ -10,8 +10,8 @@ import (
 
 func newEmbedding(ctx context.Context) (emb embedding.Embedder, err error) {
 	return common.NewEmbedder(ctx, &common.EmbeddingConfig{
-		BaseURL: conf.GlobalConfig.EmbedConfig.BaseURL,
-		APIKey:  conf.GlobalConfig.EmbedConfig.APIKey,
-		Model:   conf.GlobalConfig.EmbedConfig.Model,
+		BaseURL: conf.GlobalConfig.EmbedConf.BaseURL,
+		APIKey:  conf.GlobalConfig.EmbedConf.APIKey,
+		Model:   conf.GlobalConfig.EmbedConf.Model,
 	})
 }

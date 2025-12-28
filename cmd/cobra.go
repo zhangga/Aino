@@ -55,10 +55,10 @@ func init() {
 	rootCmd.Flags().StringVar(&conf.GlobalConfig.ServiceConf.LangfusePublicKey, "service.langfuse_public_key", "", "Langfuse Public Key, eg: --service.langfuse_public_key=xxxxx")
 	rootCmd.Flags().StringVar(&conf.GlobalConfig.ServiceConf.LangfuseSecretKey, "service.langfuse_secret_key", "", "Langfuse Secret Key, eg: --service.langfuse_secret_key=xxxxx")
 	// Embed配置
-	conf.GlobalConfig.EmbedConfig = &conf.EmbedConfig{}
-	rootCmd.Flags().StringVar(&conf.GlobalConfig.EmbedConfig.BaseURL, "embed.base_url", "", "embedding url, eg: --embed.base_url=https://ark.cn-beijing.volces.com/api/v3")
-	rootCmd.Flags().StringVar(&conf.GlobalConfig.EmbedConfig.APIKey, "embed.api_key", "", "embedding api key, eg: --embed.api_key=xxxxx")
-	rootCmd.Flags().StringVar(&conf.GlobalConfig.EmbedConfig.Model, "embed.model", "", "embedding model, eg: --embed.model=xxxxx")
+	conf.GlobalConfig.EmbedConf = &conf.EmbedConfig{}
+	rootCmd.Flags().StringVar(&conf.GlobalConfig.EmbedConf.BaseURL, "embed.base_url", "", "embedding url, eg: --embed.base_url=https://ark.cn-beijing.volces.com/api/v3")
+	rootCmd.Flags().StringVar(&conf.GlobalConfig.EmbedConf.APIKey, "embed.api_key", "", "embedding api key, eg: --embed.api_key=xxxxx")
+	rootCmd.Flags().StringVar(&conf.GlobalConfig.EmbedConf.Model, "embed.model", "", "embedding model, eg: --embed.model=xxxxx")
 	// Indexer配置
 	conf.GlobalConfig.IndexerConf = &conf.IndexerConfig{}
 	rootCmd.Flags().StringVar(&conf.GlobalConfig.IndexerConf.RedisAddr, "indexer.redis_addr", "localhost:6379", "redis address, eg: --indexer.redis_addr=localhost:6379")
