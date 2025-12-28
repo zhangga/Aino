@@ -10,7 +10,10 @@ import (
 
 	"github.com/cloudwego/eino/components/tool"
 	"github.com/cloudwego/eino/components/tool/utils"
+	"github.com/zhangga/aino/aino_ext/tools"
 )
+
+var _ tools.Tool = (*GitCloneFileImpl)(nil)
 
 type GitCloneFileImpl struct {
 	config *GitCloneFileConfig

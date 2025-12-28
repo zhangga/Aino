@@ -23,6 +23,7 @@ import (
 	"github.com/cloudwego/eino/components/tool"
 	"github.com/cloudwego/eino/components/tool/utils"
 	"github.com/google/uuid"
+	"github.com/zhangga/aino/aino_ext/tools"
 )
 
 type Action string
@@ -65,6 +66,8 @@ type TaskResponse struct {
 
 	Error string `json:"error" jsonschema_description:"error message"`
 }
+
+var _ tools.Tool = (*TaskToolImpl)(nil)
 
 type TaskToolImpl struct {
 	config *TaskToolConfig

@@ -11,9 +11,10 @@ import (
 
 	"github.com/cloudwego/eino/components/tool"
 	"github.com/cloudwego/eino/components/tool/utils"
+	"github.com/zhangga/aino/aino_ext/tools"
 )
 
-var _ tool.BaseTool = (*OpenFileToolImpl)(nil)
+var _ tools.Tool = (*OpenFileToolImpl)(nil)
 
 type OpenFileToolImpl struct {
 	config *OpenFileToolConfig
@@ -42,7 +43,7 @@ func NewOpenFileTool(ctx context.Context, config *OpenFileToolConfig) (tn tool.B
 	return tn, nil
 }
 
-func (of *OpenFileToolImpl) ToEinoTool() (tool.InvokableTool, error) {
+func (of *OpenFileToolImpl) ToEinoTool() (tool.BaseTool, error) {
 	return utils.InferTool("open", "open a file/dir/web url in the system by default application", of.Invoke)
 }
 

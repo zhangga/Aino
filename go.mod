@@ -6,9 +6,10 @@ replace google.golang.org/genproto => google.golang.org/genproto v0.0.0-20251222
 
 require (
 	github.com/bytedance/sonic v1.14.2
-	github.com/cloudwego/eino v0.7.13
+	github.com/cloudwego/eino v0.7.14
 	github.com/cloudwego/eino-ext/callbacks/apmplus v0.0.2
 	github.com/cloudwego/eino-ext/callbacks/langfuse v0.0.0-20251223041451-fede3afb5715
+	github.com/cloudwego/eino-ext/components/tool/duckduckgo/v2 v2.0.0-20251226123311-1d93d527c144
 	github.com/cloudwego/eino-ext/devops v0.1.8
 	github.com/cloudwego/hertz v0.10.3
 	github.com/hertz-contrib/obs-opentelemetry/provider v0.3.0
@@ -19,7 +20,7 @@ require (
 	github.com/spf13/cobra v1.10.2
 	github.com/spf13/viper v1.21.0
 	github.com/zhangga/aino/aino_ext/components/embedding/common v0.0.0-20251224101045-368b97ab6973
-	github.com/zhangga/aino/aino_ext/tools/task v0.0.0-20251226101856-7f9b28ae6fcc
+	github.com/zhangga/aino/aino_ext/tools v0.0.0-20251228142533-3cdfee407d95
 	go.opentelemetry.io/otel v1.38.0
 	go.uber.org/zap v1.27.1
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
@@ -33,7 +34,6 @@ require (
 	github.com/bytedance/gopkg v0.1.3 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
-	github.com/cloudwego/eino-ext/components/tool/duckduckgo/v2 v2.0.0-20251226123311-1d93d527c144 // indirect
 	github.com/cloudwego/eino-ext/libs/acl/langfuse v0.0.0-20251124083837-ce2e7e196f9f // indirect
 	github.com/cloudwego/eino-ext/libs/acl/opentelemetry v0.0.0-20250225080340-5935633151d3 // indirect
 	github.com/cloudwego/gopkg v0.1.4 // indirect
@@ -86,7 +86,6 @@ require (
 	github.com/cloudwego/eino-ext/components/indexer/redis v0.0.0-20251223041451-fede3afb5715
 	github.com/cloudwego/eino-ext/components/model/ark v0.1.57
 	github.com/cloudwego/eino-ext/components/retriever/redis v0.0.0-20251223041451-fede3afb5715
-	github.com/cloudwego/eino-ext/components/tool/duckduckgo v0.0.0-20251223041451-fede3afb5715
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/goph/emperror v0.17.2 // indirect

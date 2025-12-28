@@ -1,12 +1,12 @@
-module github.com/zhangga/aino/aino_ext/components/embedding/common
+module github.com/zhangga/aino/aino_ext/components
 
 go 1.25.5
 
 require (
 	github.com/bytedance/gopkg v0.1.3
 	github.com/bytedance/sonic v1.14.2
-	github.com/cloudwego/eino v0.7.12
-	github.com/zhangga/aino v0.0.0-20251224083251-77a32911e620
+	github.com/cloudwego/eino v0.7.14
+	github.com/zhangga/aino v0.0.0-20251228142533-3cdfee407d95
 )
 
 require (
@@ -30,11 +30,8 @@ require (
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/wk8/go-ordered-map/v2 v2.1.8 // indirect
 	github.com/yargevad/filepathx v1.0.0 // indirect
-	go.uber.org/multierr v1.10.0 // indirect
-	go.uber.org/zap v1.27.1 // indirect
-	golang.org/x/arch v0.11.0 // indirect
-	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
+	golang.org/x/arch v0.12.0 // indirect
+	golang.org/x/exp v0.0.0-20241009180824-f66d83c29e7c // indirect
 	golang.org/x/sys v0.39.0 // indirect
-	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
