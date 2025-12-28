@@ -5,10 +5,13 @@
     "title": "*UserMessage"
   },
   "output_type": {
-    "title": "*schema.Message"
+    "title": "*schema.Message",
+    "description": "github.com/cloudwego/eino/schema"
   },
-  "gen_local_state": {},
-  "id": "DOuUoo",
+  "gen_local_state": {
+    "output_type": {}
+  },
+  "id": "lyLr9o",
   "component": "Graph",
   "nodes": [
     {
@@ -19,7 +22,7 @@
       "layoutData": {
         "position": {
           "x": 80,
-          "y": 772
+          "y": 682
         }
       }
     },
@@ -30,26 +33,26 @@
       "type": "end",
       "layoutData": {
         "position": {
-          "x": 1695,
-          "y": 0
+          "x": 1686.38,
+          "y": 355.35
         }
       }
     },
     {
-      "id": "iS5G5G",
-      "key": "Lambda1",
-      "name": "",
+      "id": "8AgKo6",
+      "key": "InputToQuery",
+      "name": "UserMessageToQuery",
       "type": "Lambda",
       "component_schema": {
         "name": "Lambda",
         "component": "Lambda",
         "component_source": "custom",
         "input_type": {
-          "title": "any",
+          "title": "*UserMessage",
           "description": ""
         },
         "output_type": {
-          "title": "any",
+          "title": "string",
           "description": ""
         },
         "extra_property": {
@@ -85,361 +88,22 @@
               "has_option"
             ]
           },
-          "extra_property_input": "{\"interaction_type\":\"invoke\"}"
+          "extra_property_input": "{\"has_option\":true,\"interaction_type\":\"invoke\"}"
         },
         "is_io_type_mutable": true,
         "version": "1.0.0"
       },
       "layoutData": {
         "position": {
-          "x": 705,
-          "y": 542
+          "x": 375,
+          "y": 735
         }
-      }
-    },
-    {
-      "id": "PcbNLv",
-      "key": "Retriever1",
-      "name": "",
-      "type": "Retriever",
-      "component_schema": {
-        "name": "redis",
-        "component": "Retriever",
-        "component_source": "official",
-        "identifier": "github.com/cloudwego/eino-ext/components/retriever/redis",
-        "input_type": {
-          "title": "string",
-          "description": ""
-        },
-        "output_type": {
-          "title": "[]*schema.Document",
-          "description": ""
-        },
-        "slots": [
-          {
-            "component": "Embedding",
-            "field_loc_path": "Embedding",
-            "multiple": false,
-            "required": false,
-            "component_items": [
-              {
-                "name": "ark",
-                "component": "Embedding",
-                "component_source": "official",
-                "identifier": "github.com/cloudwego/eino-ext/components/embedding/ark",
-                "input_type": {
-                  "title": "[]string",
-                  "description": ""
-                },
-                "output_type": {
-                  "title": "[][]float64",
-                  "description": ""
-                },
-                "config": {
-                  "description": "github.com/cloudwego/eino-ext/blob/main/components/embedding/ark/embedding.go",
-                  "schema": {
-                    "type": "object",
-                    "description": "",
-                    "properties": {
-                      "APIKey": {
-                        "type": "string",
-                        "description": "",
-                        "goDefinition": {
-                          "libraryRef": {
-                            "version": "",
-                            "module": "",
-                            "pkgPath": ""
-                          },
-                          "typeName": "string",
-                          "kind": "string",
-                          "isPtr": false
-                        }
-                      },
-                      "AccessKey": {
-                        "type": "string",
-                        "description": "",
-                        "goDefinition": {
-                          "libraryRef": {
-                            "version": "",
-                            "module": "",
-                            "pkgPath": ""
-                          },
-                          "typeName": "string",
-                          "kind": "string",
-                          "isPtr": false
-                        }
-                      },
-                      "BaseURL": {
-                        "type": "string",
-                        "description": "",
-                        "goDefinition": {
-                          "libraryRef": {
-                            "version": "",
-                            "module": "",
-                            "pkgPath": ""
-                          },
-                          "typeName": "string",
-                          "kind": "string",
-                          "isPtr": false
-                        }
-                      },
-                      "Model": {
-                        "type": "string",
-                        "description": "",
-                        "goDefinition": {
-                          "libraryRef": {
-                            "version": "",
-                            "module": "",
-                            "pkgPath": ""
-                          },
-                          "typeName": "string",
-                          "kind": "string",
-                          "isPtr": false
-                        }
-                      },
-                      "Region": {
-                        "type": "string",
-                        "description": "",
-                        "goDefinition": {
-                          "libraryRef": {
-                            "version": "",
-                            "module": "",
-                            "pkgPath": ""
-                          },
-                          "typeName": "string",
-                          "kind": "string",
-                          "isPtr": false
-                        }
-                      },
-                      "RetryTimes": {
-                        "type": "number",
-                        "description": "",
-                        "goDefinition": {
-                          "libraryRef": {
-                            "version": "",
-                            "module": "",
-                            "pkgPath": ""
-                          },
-                          "typeName": "int",
-                          "kind": "int",
-                          "isPtr": true
-                        }
-                      },
-                      "SecretKey": {
-                        "type": "string",
-                        "description": "",
-                        "goDefinition": {
-                          "libraryRef": {
-                            "version": "",
-                            "module": "",
-                            "pkgPath": ""
-                          },
-                          "typeName": "string",
-                          "kind": "string",
-                          "isPtr": false
-                        }
-                      },
-                      "Timeout": {
-                        "type": "number",
-                        "description": "",
-                        "goDefinition": {
-                          "libraryRef": {
-                            "version": "",
-                            "module": "time",
-                            "pkgPath": "time"
-                          },
-                          "typeName": "time.Duration",
-                          "kind": "int64",
-                          "isPtr": true
-                        }
-                      }
-                    },
-                    "propertyOrder": [
-                      "BaseURL",
-                      "Region",
-                      "Timeout",
-                      "RetryTimes",
-                      "APIKey",
-                      "AccessKey",
-                      "SecretKey",
-                      "Model"
-                    ],
-                    "goDefinition": {
-                      "libraryRef": {
-                        "version": "",
-                        "module": "",
-                        "pkgPath": ""
-                      },
-                      "typeName": "ark.EmbeddingConfig",
-                      "kind": "struct",
-                      "isPtr": false
-                    }
-                  },
-                  "config_input": ""
-                },
-                "is_io_type_mutable": false,
-                "version": "1.0.0",
-                "id": "Skv78w",
-                "layoutData": {
-                  "isSlotNode": true,
-                  "position": {
-                    "x": 1035,
-                    "y": 901
-                  }
-                }
-              }
-            ],
-            "go_definition": {
-              "libraryRef": {
-                "version": "v0.3.6",
-                "module": "github.com/cloudwego/eino",
-                "pkgPath": "github.com/cloudwego/eino/components/embedding"
-              },
-              "typeName": "embedding.Embedder",
-              "kind": "interface",
-              "isPtr": false
-            }
-          }
-        ],
-        "config": {
-          "description": "github.com/cloudwego/eino-ext/blob/main/components/retriever/redis/retriever.go",
-          "schema": {
-            "type": "object",
-            "description": "",
-            "properties": {
-              "Dialect": {
-                "type": "number",
-                "description": "",
-                "goDefinition": {
-                  "libraryRef": {
-                    "version": "",
-                    "module": "",
-                    "pkgPath": ""
-                  },
-                  "typeName": "int",
-                  "kind": "int",
-                  "isPtr": false
-                }
-              },
-              "DistanceThreshold": {
-                "type": "number",
-                "description": "",
-                "goDefinition": {
-                  "libraryRef": {
-                    "version": "",
-                    "module": "",
-                    "pkgPath": ""
-                  },
-                  "typeName": "float64",
-                  "kind": "float64",
-                  "isPtr": true
-                }
-              },
-              "Index": {
-                "type": "string",
-                "description": "",
-                "goDefinition": {
-                  "libraryRef": {
-                    "version": "",
-                    "module": "",
-                    "pkgPath": ""
-                  },
-                  "typeName": "string",
-                  "kind": "string",
-                  "isPtr": false
-                }
-              },
-              "ReturnFields": {
-                "type": "array",
-                "description": "",
-                "items": {
-                  "type": "string",
-                  "description": "",
-                  "goDefinition": {
-                    "libraryRef": {
-                      "version": "",
-                      "module": "",
-                      "pkgPath": ""
-                    },
-                    "typeName": "string",
-                    "kind": "string",
-                    "isPtr": false
-                  }
-                },
-                "goDefinition": {
-                  "libraryRef": {
-                    "version": "",
-                    "module": "",
-                    "pkgPath": ""
-                  },
-                  "typeName": "[]string",
-                  "kind": "slice",
-                  "isPtr": false
-                }
-              },
-              "TopK": {
-                "type": "number",
-                "description": "",
-                "goDefinition": {
-                  "libraryRef": {
-                    "version": "",
-                    "module": "",
-                    "pkgPath": ""
-                  },
-                  "typeName": "int",
-                  "kind": "int",
-                  "isPtr": false
-                }
-              },
-              "VectorField": {
-                "type": "string",
-                "description": "",
-                "goDefinition": {
-                  "libraryRef": {
-                    "version": "",
-                    "module": "",
-                    "pkgPath": ""
-                  },
-                  "typeName": "string",
-                  "kind": "string",
-                  "isPtr": false
-                }
-              }
-            },
-            "propertyOrder": [
-              "Index",
-              "VectorField",
-              "DistanceThreshold",
-              "Dialect",
-              "ReturnFields",
-              "TopK"
-            ],
-            "goDefinition": {
-              "libraryRef": {
-                "version": "",
-                "module": "",
-                "pkgPath": ""
-              },
-              "typeName": "redis.RetrieverConfig",
-              "kind": "struct",
-              "isPtr": false
-            }
-          },
-          "config_input": ""
-        },
-        "is_io_type_mutable": false,
-        "version": "1.0.0"
       },
-      "layoutData": {
-        "position": {
-          "x": 705,
-          "y": 876
-        }
-      }
+      "node_option": {}
     },
     {
-      "id": "K43vxF",
-      "key": "ChatTemplate1",
+      "id": "A7z9_b",
+      "key": "ChatTemplate",
       "name": "",
       "type": "ChatTemplate",
       "component_schema": {
@@ -495,7 +159,7 @@
               "isPtr": false
             }
           },
-          "config_input": ""
+          "config_input": "{\"FormatType\":1}"
         },
         "is_io_type_mutable": false,
         "version": "1.0.0"
@@ -503,14 +167,15 @@
       "layoutData": {
         "position": {
           "x": 1035,
-          "y": 588
+          "y": 498
         }
-      }
+      },
+      "node_option": {}
     },
     {
-      "id": "V7F5oe",
-      "key": "Lambda2",
-      "name": "",
+      "id": "CDNTqO",
+      "key": "ReactAgent",
+      "name": "ReAct Agent",
       "type": "Lambda",
       "component_schema": {
         "name": "react",
@@ -822,12 +487,12 @@
                 },
                 "is_io_type_mutable": false,
                 "version": "1.0.0",
-                "id": "eyTYdJ",
+                "id": "9n5PZt",
                 "layoutData": {
                   "isSlotNode": true,
                   "position": {
-                    "x": 1695,
-                    "y": 172
+                    "x": 1697.28,
+                    "y": 458.76
                   }
                 }
               }
@@ -1080,16 +745,16 @@
                       "isPtr": false
                     }
                   },
-                  "config_input": ""
+                  "config_input": "{}"
                 },
                 "is_io_type_mutable": false,
                 "version": "1.0.0",
-                "id": "V207Ow",
+                "id": "Hw6TpP",
                 "layoutData": {
                   "isSlotNode": true,
                   "position": {
-                    "x": 1695,
-                    "y": 404
+                    "x": 1696.32,
+                    "y": 602.28
                   }
                 }
               },
@@ -1119,12 +784,14 @@
                 },
                 "is_io_type_mutable": false,
                 "version": "1.0.0",
-                "id": "hhv7mM",
+                "input_type": {},
+                "output_type": {},
+                "id": "iMwAQ_",
                 "layoutData": {
                   "isSlotNode": true,
                   "position": {
-                    "x": 1695,
-                    "y": 606
+                    "x": 1699.2,
+                    "y": 845.16
                   }
                 }
               },
@@ -1154,12 +821,14 @@
                 },
                 "is_io_type_mutable": false,
                 "version": "1.0.0",
-                "id": "ARibTp",
+                "input_type": {},
+                "output_type": {},
+                "id": "KKj2rp",
                 "layoutData": {
                   "isSlotNode": true,
                   "position": {
-                    "x": 1695,
-                    "y": 832
+                    "x": 1697.28,
+                    "y": 711.72
                   }
                 }
               },
@@ -1189,12 +858,14 @@
                 },
                 "is_io_type_mutable": false,
                 "version": "1.0.0",
-                "id": "Gi9Ezw",
+                "input_type": {},
+                "output_type": {},
+                "id": "FFz0iR",
                 "layoutData": {
                   "isSlotNode": true,
                   "position": {
-                    "x": 1695,
-                    "y": 1058
+                    "x": 1701.92,
+                    "y": 1112.84
                   }
                 }
               },
@@ -1224,12 +895,14 @@
                 },
                 "is_io_type_mutable": false,
                 "version": "1.0.0",
-                "id": "5-x-IT",
+                "input_type": {},
+                "output_type": {},
+                "id": "cu1Hbe",
                 "layoutData": {
                   "isSlotNode": true,
                   "position": {
-                    "x": 1695,
-                    "y": 1284
+                    "x": 1700.8,
+                    "y": 978.28
                   }
                 }
               }
@@ -1310,7 +983,7 @@
               "isPtr": false
             }
           },
-          "config_input": ""
+          "config_input": "{\"ToolReturnDirectly\":{\"einoAdditionalPropertyInput\":[]},\"MaxStep\":25}"
         },
         "is_io_type_mutable": false,
         "version": "1.0.0"
@@ -1318,25 +991,363 @@
       "layoutData": {
         "position": {
           "x": 1365,
-          "y": 555
+          "y": 465
         }
+      },
+      "node_option": {}
+    },
+    {
+      "id": "iunICK",
+      "key": "RedisRetriever",
+      "name": "",
+      "type": "Retriever",
+      "component_schema": {
+        "name": "redis",
+        "component": "Retriever",
+        "component_source": "official",
+        "identifier": "github.com/cloudwego/eino-ext/components/retriever/redis",
+        "slots": [
+          {
+            "component": "Embedding",
+            "field_loc_path": "Embedding",
+            "multiple": false,
+            "required": false,
+            "component_items": [
+              {
+                "name": "ark",
+                "component": "Embedding",
+                "component_source": "official",
+                "identifier": "github.com/cloudwego/eino-ext/components/embedding/ark",
+                "input_type": {
+                  "title": "[]string",
+                  "description": ""
+                },
+                "output_type": {
+                  "title": "[][]float64",
+                  "description": ""
+                },
+                "config": {
+                  "description": "github.com/cloudwego/eino-ext/blob/main/components/embedding/ark/embedding.go",
+                  "schema": {
+                    "type": "object",
+                    "description": "",
+                    "properties": {
+                      "APIKey": {
+                        "type": "string",
+                        "description": "",
+                        "goDefinition": {
+                          "libraryRef": {
+                            "version": "",
+                            "module": "",
+                            "pkgPath": ""
+                          },
+                          "typeName": "string",
+                          "kind": "string",
+                          "isPtr": false
+                        }
+                      },
+                      "AccessKey": {
+                        "type": "string",
+                        "description": "",
+                        "goDefinition": {
+                          "libraryRef": {
+                            "version": "",
+                            "module": "",
+                            "pkgPath": ""
+                          },
+                          "typeName": "string",
+                          "kind": "string",
+                          "isPtr": false
+                        }
+                      },
+                      "BaseURL": {
+                        "type": "string",
+                        "description": "",
+                        "goDefinition": {
+                          "libraryRef": {
+                            "version": "",
+                            "module": "",
+                            "pkgPath": ""
+                          },
+                          "typeName": "string",
+                          "kind": "string",
+                          "isPtr": false
+                        }
+                      },
+                      "Model": {
+                        "type": "string",
+                        "description": "",
+                        "goDefinition": {
+                          "libraryRef": {
+                            "version": "",
+                            "module": "",
+                            "pkgPath": ""
+                          },
+                          "typeName": "string",
+                          "kind": "string",
+                          "isPtr": false
+                        }
+                      },
+                      "Region": {
+                        "type": "string",
+                        "description": "",
+                        "goDefinition": {
+                          "libraryRef": {
+                            "version": "",
+                            "module": "",
+                            "pkgPath": ""
+                          },
+                          "typeName": "string",
+                          "kind": "string",
+                          "isPtr": false
+                        }
+                      },
+                      "RetryTimes": {
+                        "type": "number",
+                        "description": "",
+                        "goDefinition": {
+                          "libraryRef": {
+                            "version": "",
+                            "module": "",
+                            "pkgPath": ""
+                          },
+                          "typeName": "int",
+                          "kind": "int",
+                          "isPtr": true
+                        }
+                      },
+                      "SecretKey": {
+                        "type": "string",
+                        "description": "",
+                        "goDefinition": {
+                          "libraryRef": {
+                            "version": "",
+                            "module": "",
+                            "pkgPath": ""
+                          },
+                          "typeName": "string",
+                          "kind": "string",
+                          "isPtr": false
+                        }
+                      },
+                      "Timeout": {
+                        "type": "number",
+                        "description": "",
+                        "goDefinition": {
+                          "libraryRef": {
+                            "version": "",
+                            "module": "time",
+                            "pkgPath": "time"
+                          },
+                          "typeName": "time.Duration",
+                          "kind": "int64",
+                          "isPtr": true
+                        }
+                      }
+                    },
+                    "propertyOrder": [
+                      "BaseURL",
+                      "Region",
+                      "Timeout",
+                      "RetryTimes",
+                      "APIKey",
+                      "AccessKey",
+                      "SecretKey",
+                      "Model"
+                    ],
+                    "goDefinition": {
+                      "libraryRef": {
+                        "version": "",
+                        "module": "",
+                        "pkgPath": ""
+                      },
+                      "typeName": "ark.EmbeddingConfig",
+                      "kind": "struct",
+                      "isPtr": false
+                    }
+                  },
+                  "config_input": "{}"
+                },
+                "is_io_type_mutable": false,
+                "version": "1.0.0",
+                "id": "LMuyas",
+                "layoutData": {
+                  "isSlotNode": true,
+                  "position": {
+                    "x": 1052.27,
+                    "y": 849.45
+                  }
+                }
+              }
+            ],
+            "go_definition": {
+              "libraryRef": {
+                "version": "v0.3.6",
+                "module": "github.com/cloudwego/eino",
+                "pkgPath": "github.com/cloudwego/eino/components/embedding"
+              },
+              "typeName": "embedding.Embedder",
+              "kind": "interface",
+              "isPtr": false
+            }
+          }
+        ],
+        "config": {
+          "description": "github.com/cloudwego/eino-ext/blob/main/components/retriever/redis/retriever.go",
+          "schema": {
+            "type": "object",
+            "description": "",
+            "properties": {
+              "Dialect": {
+                "type": "number",
+                "description": "",
+                "goDefinition": {
+                  "libraryRef": {
+                    "version": "",
+                    "module": "",
+                    "pkgPath": ""
+                  },
+                  "typeName": "int",
+                  "kind": "int",
+                  "isPtr": false
+                }
+              },
+              "DistanceThreshold": {
+                "type": "number",
+                "description": "",
+                "goDefinition": {
+                  "libraryRef": {
+                    "version": "",
+                    "module": "",
+                    "pkgPath": ""
+                  },
+                  "typeName": "float64",
+                  "kind": "float64",
+                  "isPtr": true
+                }
+              },
+              "Index": {
+                "type": "string",
+                "description": "",
+                "goDefinition": {
+                  "libraryRef": {
+                    "version": "",
+                    "module": "",
+                    "pkgPath": ""
+                  },
+                  "typeName": "string",
+                  "kind": "string",
+                  "isPtr": false
+                }
+              },
+              "ReturnFields": {
+                "type": "array",
+                "description": "",
+                "items": {
+                  "type": "string",
+                  "description": "",
+                  "goDefinition": {
+                    "libraryRef": {
+                      "version": "",
+                      "module": "",
+                      "pkgPath": ""
+                    },
+                    "typeName": "string",
+                    "kind": "string",
+                    "isPtr": false
+                  }
+                },
+                "goDefinition": {
+                  "libraryRef": {
+                    "version": "",
+                    "module": "",
+                    "pkgPath": ""
+                  },
+                  "typeName": "[]string",
+                  "kind": "slice",
+                  "isPtr": false
+                }
+              },
+              "TopK": {
+                "type": "number",
+                "description": "",
+                "goDefinition": {
+                  "libraryRef": {
+                    "version": "",
+                    "module": "",
+                    "pkgPath": ""
+                  },
+                  "typeName": "int",
+                  "kind": "int",
+                  "isPtr": false
+                }
+              },
+              "VectorField": {
+                "type": "string",
+                "description": "",
+                "goDefinition": {
+                  "libraryRef": {
+                    "version": "",
+                    "module": "",
+                    "pkgPath": ""
+                  },
+                  "typeName": "string",
+                  "kind": "string",
+                  "isPtr": false
+                }
+              }
+            },
+            "propertyOrder": [
+              "Index",
+              "VectorField",
+              "DistanceThreshold",
+              "Dialect",
+              "ReturnFields",
+              "TopK"
+            ],
+            "goDefinition": {
+              "libraryRef": {
+                "version": "",
+                "module": "",
+                "pkgPath": ""
+              },
+              "typeName": "redis.RetrieverConfig",
+              "kind": "struct",
+              "isPtr": false
+            }
+          },
+          "config_input": "{}"
+        },
+        "is_io_type_mutable": false,
+        "version": "1.0.0",
+        "input_type": {},
+        "output_type": {}
+      },
+      "layoutData": {
+        "position": {
+          "x": 705,
+          "y": 801
+        }
+      },
+      "node_option": {
+        "output_key": "documents"
       }
     },
     {
-      "id": "35gDYd",
-      "key": "Lambda3",
-      "name": "",
+      "id": "lJ0-pN",
+      "key": "InputToHistory",
+      "name": "UserMessageToVariables",
       "type": "Lambda",
       "component_schema": {
         "name": "Lambda",
         "component": "Lambda",
         "component_source": "custom",
         "input_type": {
-          "title": "any",
+          "title": "*UserMessage",
           "description": ""
         },
         "output_type": {
-          "title": "any",
+          "title": "map[string]any",
           "description": ""
         },
         "extra_property": {
@@ -1372,17 +1383,18 @@
               "has_option"
             ]
           },
-          "extra_property_input": "{\"interaction_type\":\"invoke\"}"
+          "extra_property_input": "{\"has_option\":true,\"interaction_type\":\"invoke\"}"
         },
         "is_io_type_mutable": true,
         "version": "1.0.0"
       },
       "layoutData": {
         "position": {
-          "x": 375,
-          "y": 840
+          "x": 705,
+          "y": 437
         }
-      }
+      },
+      "node_option": {}
     }
   ],
   "edges": [
@@ -1390,66 +1402,64 @@
       "id": "",
       "name": "",
       "sourceWorkflowNodeId": "start",
-      "targetWorkflowNodeId": "iS5G5G",
+      "targetWorkflowNodeId": "8AgKo6",
       "source_node_key": "start",
-      "target_node_key": "Lambda1"
+      "target_node_key": "InputToQuery"
     },
     {
       "id": "",
       "name": "",
       "sourceWorkflowNodeId": "start",
-      "targetWorkflowNodeId": "35gDYd",
+      "targetWorkflowNodeId": "lJ0-pN",
       "source_node_key": "start",
-      "target_node_key": "Lambda3"
+      "target_node_key": "InputToHistory"
     },
     {
       "id": "",
       "name": "",
-      "sourceWorkflowNodeId": "V7F5oe",
+      "sourceWorkflowNodeId": "CDNTqO",
       "targetWorkflowNodeId": "end",
-      "source_node_key": "Lambda2",
+      "source_node_key": "ReactAgent",
       "target_node_key": "end"
     },
     {
       "id": "",
       "name": "",
-      "sourceWorkflowNodeId": "iS5G5G",
-      "targetWorkflowNodeId": "K43vxF",
-      "source_node_key": "Lambda1",
-      "target_node_key": "ChatTemplate1"
+      "sourceWorkflowNodeId": "8AgKo6",
+      "targetWorkflowNodeId": "iunICK",
+      "source_node_key": "InputToQuery",
+      "target_node_key": "RedisRetriever"
     },
     {
       "id": "",
       "name": "",
-      "sourceWorkflowNodeId": "35gDYd",
-      "targetWorkflowNodeId": "PcbNLv",
-      "source_node_key": "Lambda3",
-      "target_node_key": "Retriever1"
+      "sourceWorkflowNodeId": "iunICK",
+      "targetWorkflowNodeId": "A7z9_b",
+      "source_node_key": "RedisRetriever",
+      "target_node_key": "ChatTemplate"
     },
     {
       "id": "",
       "name": "",
-      "sourceWorkflowNodeId": "PcbNLv",
-      "targetWorkflowNodeId": "K43vxF",
-      "source_node_key": "Retriever1",
-      "target_node_key": "ChatTemplate1"
+      "sourceWorkflowNodeId": "lJ0-pN",
+      "targetWorkflowNodeId": "A7z9_b",
+      "source_node_key": "InputToHistory",
+      "target_node_key": "ChatTemplate"
     },
     {
       "id": "",
       "name": "",
-      "sourceWorkflowNodeId": "K43vxF",
-      "targetWorkflowNodeId": "V7F5oe",
-      "source_node_key": "ChatTemplate1",
-      "target_node_key": "Lambda2"
+      "sourceWorkflowNodeId": "A7z9_b",
+      "targetWorkflowNodeId": "CDNTqO",
+      "source_node_key": "ChatTemplate",
+      "target_node_key": "ReactAgent"
     }
   ],
   "branches": [],
   "nodeCounter": {
-    "Lambda": 8,
-    "Retriever": 2,
-    "ChatTemplate": 2,
-    "ChatModel": 3,
-    "default": 2,
-    "Tool": 2
+    "Lambda": 6,
+    "ChatModel": 2,
+    "Tool": 2,
+    "default": 2
   }
 }

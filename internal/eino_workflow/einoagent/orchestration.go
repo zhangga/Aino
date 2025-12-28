@@ -9,37 +9,37 @@ import (
 
 func BuildEinoAgent(ctx context.Context) (r compose.Runnable[*UserMessage, *schema.Message], err error) {
 	const (
-		Lambda1       = "Lambda1"
-		Retriever1    = "Retriever1"
-		ChatTemplate1 = "ChatTemplate1"
-		Lambda2       = "Lambda2"
-		Lambda3       = "Lambda3"
+		InputToQuery   = "InputToQuery"
+		ChatTemplate   = "ChatTemplate"
+		ReactAgent     = "ReactAgent"
+		RedisRetriever = "RedisRetriever"
+		InputToHistory = "InputToHistory"
 	)
 	g := compose.NewGraph[*UserMessage, *schema.Message]()
-	_ = g.AddLambdaNode(Lambda1, compose.InvokableLambda(newLambda))
-	retriever1KeyOfRetriever, err := newRetriever(ctx)
+	_ = g.AddLambdaNode(InputToQuery, compose.InvokableLambdaWithOption(newLambda), compose.WithNodeName("UserMessageToQuery"))
+	chatTemplateKeyOfChatTemplate, err := newChatTemplate(ctx)
 	if err != nil {
 		return nil, err
 	}
-	_ = g.AddRetrieverNode(Retriever1, retriever1KeyOfRetriever)
-	chatTemplate1KeyOfChatTemplate, err := newChatTemplate(ctx)
+	_ = g.AddChatTemplateNode(ChatTemplate, chatTemplateKeyOfChatTemplate)
+	reactAgentKeyOfLambda, err := newLambda1(ctx)
 	if err != nil {
 		return nil, err
 	}
-	_ = g.AddChatTemplateNode(ChatTemplate1, chatTemplate1KeyOfChatTemplate)
-	lambda2KeyOfLambda, err := newLambda1(ctx)
+	_ = g.AddLambdaNode(ReactAgent, reactAgentKeyOfLambda, compose.WithNodeName("ReAct Agent"))
+	redisRetrieverKeyOfRetriever, err := newRetriever(ctx)
 	if err != nil {
 		return nil, err
 	}
-	_ = g.AddLambdaNode(Lambda2, lambda2KeyOfLambda)
-	_ = g.AddLambdaNode(Lambda3, compose.InvokableLambda(newLambda2))
-	_ = g.AddEdge(compose.START, Lambda1)
-	_ = g.AddEdge(compose.START, Lambda3)
-	_ = g.AddEdge(Lambda2, compose.END)
-	_ = g.AddEdge(Lambda1, ChatTemplate1)
-	_ = g.AddEdge(Lambda3, Retriever1)
-	_ = g.AddEdge(Retriever1, ChatTemplate1)
-	_ = g.AddEdge(ChatTemplate1, Lambda2)
+	_ = g.AddRetrieverNode(RedisRetriever, redisRetrieverKeyOfRetriever, compose.WithOutputKey("documents"))
+	_ = g.AddLambdaNode(InputToHistory, compose.InvokableLambdaWithOption(newLambda2), compose.WithNodeName("UserMessageToVariables"))
+	_ = g.AddEdge(compose.START, InputToQuery)
+	_ = g.AddEdge(compose.START, InputToHistory)
+	_ = g.AddEdge(ReactAgent, compose.END)
+	_ = g.AddEdge(InputToQuery, RedisRetriever)
+	_ = g.AddEdge(RedisRetriever, ChatTemplate)
+	_ = g.AddEdge(InputToHistory, ChatTemplate)
+	_ = g.AddEdge(ChatTemplate, ReactAgent)
 	r, err = g.Compile(ctx, compose.WithGraphName("EinoAgent"), compose.WithNodeTriggerMode(compose.AllPredecessor))
 	if err != nil {
 		return nil, err
