@@ -16,10 +16,19 @@ import (
 // newRetriever component initialization function of node 'Retriever1' in graph 'EinoAgent'
 func newRetriever(ctx context.Context) (rtr retriever.Retriever, err error) {
 	// TODO Modify component configuration here.
-	redisClient := redisCli.NewClient(&redisCli.Options{
-		Addr:     conf.GlobalConfig.IndexerConf.RedisAddr,
-		Protocol: conf.GlobalConfig.IndexerConf.Protocol,
-	})
+	var redisClient *redisCli.Client
+	if len(conf.GlobalConfig.IndexerConf.RedisPwd) == 0 {
+		redisClient = redisCli.NewClient(&redisCli.Options{
+			Addr:     conf.GlobalConfig.IndexerConf.RedisAddr,
+			Protocol: conf.GlobalConfig.IndexerConf.Protocol,
+		})
+	} else {
+		redisClient = redisCli.NewClient(&redisCli.Options{
+			Addr:     conf.GlobalConfig.IndexerConf.RedisAddr,
+			Password: conf.GlobalConfig.IndexerConf.RedisPwd,
+			Protocol: conf.GlobalConfig.IndexerConf.Protocol,
+		})
+	}
 	config := &redis.RetrieverConfig{
 		Client:       redisClient,
 		Index:        fmt.Sprintf("%s%s", conf.GlobalConfig.IndexerConf.RedisPrefix, conf.GlobalConfig.IndexerConf.IndexName),
