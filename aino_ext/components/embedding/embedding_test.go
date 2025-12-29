@@ -1,14 +1,21 @@
-package common_test
+package embedding_test
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"testing"
 	"time"
 
 	"github.com/cloudwego/eino-ext/components/embedding/ark"
+	"github.com/joho/godotenv"
 	"github.com/zhangga/aino/aino_ext/components/embedding/common"
 )
+
+func init() {
+	_ = godotenv.Load("../../../.env")
+	fmt.Println(os.Getenv("ENV"))
+}
 
 func TestArkEmbedding(t *testing.T) {
 	ctx := context.Background()
@@ -36,7 +43,7 @@ func TestArkEmbedding(t *testing.T) {
 
 	// 使用生成的向量
 	for i, embedding := range embeddings {
-		println("文本", i+1, "的向量维度:", len(embedding))
+		t.Log("文本", i+1, "的向量维度:", len(embedding))
 	}
 }
 
@@ -62,6 +69,6 @@ func TestCommonEmbedding(t *testing.T) {
 	}
 
 	for i, embedding := range embeddings {
-		println("文本", i+1, "的向量维度:", len(embedding))
+		t.Log("文本", i+1, "的向量维度:", len(embedding))
 	}
 }

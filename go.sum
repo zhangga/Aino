@@ -530,8 +530,6 @@ github.com/cloudwego/eino-ext/components/document/loader/file v0.0.0-20251223041
 github.com/cloudwego/eino-ext/components/document/loader/file v0.0.0-20251223041451-fede3afb5715/go.mod h1:HnxTQxmhuev6zaBl92EHUy/vEDWCuoE/OE4cTiF5JCg=
 github.com/cloudwego/eino-ext/components/document/transformer/splitter/markdown v0.0.0-20251223041451-fede3afb5715 h1:jEj+kfxGLVxOGssk6X9wJEibfXBuJWpyQ4NZl8FdXq4=
 github.com/cloudwego/eino-ext/components/document/transformer/splitter/markdown v0.0.0-20251223041451-fede3afb5715/go.mod h1:KVOVct4e2BQ7epDONW2QE1qU5+ccoh91FzJTs9vIJj0=
-github.com/cloudwego/eino-ext/components/embedding/ark v0.1.1 h1:PM/+XAvJtrBqFlBY15ws0pb0+92XKHQv0ei3M7PIJcQ=
-github.com/cloudwego/eino-ext/components/embedding/ark v0.1.1/go.mod h1:6O6x0fHfM3uCLr3lX1DnB/my7fC3WRUA5hpkCkrkZrg=
 github.com/cloudwego/eino-ext/components/indexer/milvus v0.0.0-20251229121631-716047332ba5 h1:LH4Mvgb6XSW2EH0Oe6xWHidwMZTgajgp0BNHehcaiXA=
 github.com/cloudwego/eino-ext/components/indexer/milvus v0.0.0-20251229121631-716047332ba5/go.mod h1:rePle18XO8MDdtFgXttBUPJDkxzVra5Da9EuJ8GwZOg=
 github.com/cloudwego/eino-ext/components/indexer/redis v0.0.0-20251223041451-fede3afb5715 h1:b2nwMyNxyZ0VEZuNIhWqjYyzIej8jWLTCeZG7nHpbxA=
