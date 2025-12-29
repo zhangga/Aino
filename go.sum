@@ -524,8 +524,8 @@ github.com/cloudwego/eino-ext/components/document/transformer/splitter/markdown 
 github.com/cloudwego/eino-ext/components/document/transformer/splitter/markdown v0.0.0-20251223041451-fede3afb5715/go.mod h1:KVOVct4e2BQ7epDONW2QE1qU5+ccoh91FzJTs9vIJj0=
 github.com/cloudwego/eino-ext/components/indexer/redis v0.0.0-20251223041451-fede3afb5715 h1:b2nwMyNxyZ0VEZuNIhWqjYyzIej8jWLTCeZG7nHpbxA=
 github.com/cloudwego/eino-ext/components/indexer/redis v0.0.0-20251223041451-fede3afb5715/go.mod h1:yx19qVmk970TjutWgNwlLcaRkrTR0fEHKecLkJGcxoA=
-github.com/cloudwego/eino-ext/components/model/ark v0.1.57 h1:kiTN/rLgzI4YRp46tNVzT4CHJ+4yNkKiMIMuIQCwakc=
-github.com/cloudwego/eino-ext/components/model/ark v0.1.57/go.mod h1:8NNdNLOiszmlIPLPyRURH++zK4YOzxvwY6ORKvgR2wU=
+github.com/cloudwego/eino-ext/components/model/ark v0.1.58 h1:D3GOd1MG5qSxjXkd6jvBr60b+0W7JpFbUzk1x0zrU4Q=
+github.com/cloudwego/eino-ext/components/model/ark v0.1.58/go.mod h1:8NNdNLOiszmlIPLPyRURH++zK4YOzxvwY6ORKvgR2wU=
 github.com/cloudwego/eino-ext/components/retriever/redis v0.0.0-20251223041451-fede3afb5715 h1:aKbwWTCQQP4zxSpyxH0vKdQc3KDHBEOLQbAsI/2hzEk=
 github.com/cloudwego/eino-ext/components/retriever/redis v0.0.0-20251223041451-fede3afb5715/go.mod h1:C+JX7vgZmt/XBEXCS2KeJvyVBUeQ0Aem+xTI8AWdx3s=
 github.com/cloudwego/eino-ext/components/tool/duckduckgo/v2 v2.0.0-20251226123311-1d93d527c144 h1:h6K7jEP8WcM8GlpdGcMYBeMNSJhSGvZayGvUcP3xngw=
@@ -1244,10 +1244,10 @@ github.com/yuin/goldmark v1.4.13/go.mod h1:6yULJ656Px+3vBD8DxQVa3kxgyrAnzto9xy5t
 github.com/zeebo/assert v1.3.0/go.mod h1:Pq9JiuJQpG8JLJdtkwrJESF0Foym2/D9XMU5ciN/wJ0=
 github.com/zeebo/errs v1.4.0/go.mod h1:sgbWHsvVuTPHcqJJGQ1WhI5KbWlHYz+2+2C/LSEtCw4=
 github.com/zeebo/xxh3 v1.0.2/go.mod h1:5NWz9Sef7zIDm2JHfFlcQvNekmcEl9ekUZQQKCYaDcA=
-github.com/zhangga/aino/aino_ext/components/embedding/common v0.0.0-20251224101045-368b97ab6973 h1:HjBGI05ZQoCTddjq5SYqJ/sOQo/kAu/V2Z9cg6AzrOI=
-github.com/zhangga/aino/aino_ext/components/embedding/common v0.0.0-20251224101045-368b97ab6973/go.mod h1:smj5YbbIUz84qc5zd+TPZXwndynn8+jRbaRz4Q76SJ4=
-github.com/zhangga/aino/aino_ext/tools v0.0.0-20251228142533-3cdfee407d95 h1:pgQeQBn0K8WM1pgtDTdcn95xFG05iUQj337mk+W3H0c=
-github.com/zhangga/aino/aino_ext/tools v0.0.0-20251228142533-3cdfee407d95/go.mod h1:xTgT1b+Y7FizTTwdYZX4bPUIZYfLF4Ld1TwI22+9GSE=
+github.com/zhangga/aino/aino_ext/components/embedding/common v0.0.0-20251228142533-3cdfee407d95 h1:MDM9a+k6X6XzLx+L4rjpJPktlXFs0wOdeiMvAzU2K1A=
+github.com/zhangga/aino/aino_ext/components/embedding/common v0.0.0-20251228142533-3cdfee407d95/go.mod h1:smj5YbbIUz84qc5zd+TPZXwndynn8+jRbaRz4Q76SJ4=
+github.com/zhangga/aino/aino_ext/tools v0.0.0-20251228150556-026191323b6c h1:zHNQWVK5eVghyLg53i3+y7FVooFToITLA4W9H49PXGA=
+github.com/zhangga/aino/aino_ext/tools v0.0.0-20251228150556-026191323b6c/go.mod h1:7IVyoehMhUAUdt80XFda5o6byGluEkU7q871Q5d2H70=
 go.einride.tech/aip v0.67.1/go.mod h1:ZGX4/zKw8dcgzdLsrvpOOGxfxI2QSk12SlP7d6c0/XI=
 go.einride.tech/aip v0.68.1/go.mod h1:XaFtaj4HuA3Zwk9xoBtTWgNubZ0ZZXv9BZJCkuKuWbg=
 go.einride.tech/aip v0.73.0/go.mod h1:Mj7rFbmXEgw0dq1dqJ7JGMvYCZZVxmGOR3S4ZcV5LvQ=

@@ -42,6 +42,7 @@ type IndexerConfig struct {
 	RedisAddr   string `mapstructure:"redis_addr" json:"redis_addr" yaml:"redis_addr"`       // Redis地址
 	RedisPwd    string `mapstructure:"redis_pwd" json:"redis_pwd" yaml:"redis_pwd"`          // Redis密码
 	RedisPrefix string `mapstructure:"redis_prefix" json:"redis_prefix" yaml:"redis_prefix"` // Redis键前缀
+	IndexName   string `mapstructure:"index_name" json:"index_name" yaml:"index_name"`       // 索引名称
 	Dimension   int    `mapstructure:"dimension" json:"dimension" yaml:"dimension"`          // 向量维度
 	Protocol    int    `mapstructure:"protocol" json:"protocol" yaml:"protocol"`             // Redis协议版本
 }

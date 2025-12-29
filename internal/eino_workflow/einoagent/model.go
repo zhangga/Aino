@@ -11,8 +11,9 @@ import (
 func newToolCallingChatModel(ctx context.Context) (cm model.ToolCallingChatModel, err error) {
 	// TODO Modify component configuration here.
 	config := &ark.ChatModelConfig{
-		Model:  conf.GlobalConfig.LLMConf.Model,
-		APIKey: conf.GlobalConfig.LLMConf.APIKey,
+		BaseURL: conf.GlobalConfig.LLMConf.BaseURL,
+		Model:   conf.GlobalConfig.LLMConf.Model,
+		APIKey:  conf.GlobalConfig.LLMConf.APIKey,
 	}
 	cm, err = ark.NewChatModel(ctx, config)
 	if err != nil {

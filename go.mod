@@ -19,7 +19,8 @@ require (
 	github.com/redis/go-redis/v9 v9.10.0
 	github.com/spf13/cobra v1.10.2
 	github.com/spf13/viper v1.21.0
-	github.com/zhangga/aino/aino_ext/tools v0.0.0-20251228142533-3cdfee407d95
+	github.com/zhangga/aino/aino_ext/components/embedding/common v0.0.0-20251228142533-3cdfee407d95
+	github.com/zhangga/aino/aino_ext/tools v0.0.0-20251228150556-026191323b6c
 	go.opentelemetry.io/otel v1.38.0
 	go.uber.org/zap v1.27.1
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
@@ -83,7 +84,7 @@ require (
 	github.com/cloudwego/eino-ext/components/document/loader/file v0.0.0-20251223041451-fede3afb5715
 	github.com/cloudwego/eino-ext/components/document/transformer/splitter/markdown v0.0.0-20251223041451-fede3afb5715
 	github.com/cloudwego/eino-ext/components/indexer/redis v0.0.0-20251223041451-fede3afb5715
-	github.com/cloudwego/eino-ext/components/model/ark v0.1.57
+	github.com/cloudwego/eino-ext/components/model/ark v0.1.58
 	github.com/cloudwego/eino-ext/components/retriever/redis v0.0.0-20251223041451-fede3afb5715
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect

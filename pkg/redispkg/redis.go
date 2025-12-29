@@ -11,7 +11,7 @@ import (
 
 const (
 	defaultRedisPrefix = "knowledge:doc:"
-	IndexName          = "vector_index"
+	defaultIndexName   = "vector_index"
 
 	ContentField  = "content"
 	MetadataField = "metadata"
@@ -32,6 +32,7 @@ func Init(ctx context.Context, config Config, redisPrefix string) error {
 type Config struct {
 	RedisAddr string
 	RedisPwd  string
+	IndexName string
 	Dimension int
 	Protocol  int
 }
@@ -39,6 +40,10 @@ type Config struct {
 func InitRedisIndex(ctx context.Context, config *Config, redisPrefix string) (err error) {
 	if len(redisPrefix) == 0 {
 		redisPrefix = defaultRedisPrefix // 默认前缀
+	}
+	indexName := config.IndexName
+	if len(indexName) == 0 {
+		indexName = defaultIndexName // 默认索引名
 	}
 	if config.Dimension <= 0 {
 		return fmt.Errorf("dimension must be positive")
@@ -68,10 +73,10 @@ func InitRedisIndex(ctx context.Context, config *Config, redisPrefix string) (er
 		return fmt.Errorf("failed to connect to Redis: %w", err)
 	}
 
-	indexName := fmt.Sprintf("%s%s", redisPrefix, IndexName)
+	indexNameFull := fmt.Sprintf("%s%s", redisPrefix, indexName)
 
 	// 检查是否存在索引
-	exists, err := client.Do(ctx, "FT.INFO", indexName).Result()
+	exists, err := client.Do(ctx, "FT.INFO", indexNameFull).Result()
 	if err != nil {
 		if !strings.Contains(err.Error(), "Unknown index name") {
 			return fmt.Errorf("failed to check if index exists: %w", err)
@@ -83,7 +88,7 @@ func InitRedisIndex(ctx context.Context, config *Config, redisPrefix string) (er
 
 	// Create new index
 	createIndexArgs := []interface{}{
-		"FT.CREATE", indexName,
+		"FT.CREATE", indexNameFull,
 		"ON", "HASH",
 		"PREFIX", "1", redisPrefix,
 		"SCHEMA",
@@ -101,7 +106,7 @@ func InitRedisIndex(ctx context.Context, config *Config, redisPrefix string) (er
 	}
 
 	// 验证索引是否创建成功
-	if _, err = client.Do(ctx, "FT.INFO", indexName).Result(); err != nil {
+	if _, err = client.Do(ctx, "FT.INFO", indexNameFull).Result(); err != nil {
 		return fmt.Errorf("failed to verify index creation: %w", err)
 	}
 

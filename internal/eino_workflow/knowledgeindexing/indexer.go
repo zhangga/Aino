@@ -21,6 +21,7 @@ func newIndexer(ctx context.Context) (idr indexer.Indexer, err error) {
 	if err = redispkg.Init(ctx, redispkg.Config{
 		RedisAddr: conf.GlobalConfig.IndexerConf.RedisAddr,
 		RedisPwd:  conf.GlobalConfig.IndexerConf.RedisPwd,
+		IndexName: conf.GlobalConfig.IndexerConf.IndexName,
 		Dimension: conf.GlobalConfig.IndexerConf.Dimension,
 		Protocol:  conf.GlobalConfig.IndexerConf.Protocol,
 	}, conf.GlobalConfig.IndexerConf.RedisPrefix); err != nil {

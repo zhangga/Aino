@@ -22,5 +22,6 @@ indexer:
   redis_addr:
   redis_pwd:
   redis_prefix: "knowledge:doc:"
+  index_name: "vector_index"
   dimension: 4096
   protocol: 2
