@@ -1,9 +1,9 @@
 service:
   http_port: 8088
   debug: true
-  eino_debug: false
+  eino_debug: true
   stream_mode: true
-  apmplus_app_key: "your_apmplus_app_key"
+  apmplus_app_key: ""
   apmplus_region: "cn-beijing"
   langfuse_public_key: ""
   langfuse_secret_key: ""

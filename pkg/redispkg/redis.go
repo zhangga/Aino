@@ -83,6 +83,12 @@ func InitRedisIndex(ctx context.Context, config *Config, redisPrefix string) (er
 		}
 		err = nil
 	} else if exists != nil {
+		// 删除索引
+		//drop, err := client.Do(ctx, "FT.DROPINDEX", indexNameFull).Result()
+		//if err != nil {
+		//	return err
+		//}
+		//_ = drop
 		return nil
 	}
 

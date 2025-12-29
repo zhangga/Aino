@@ -50,6 +50,11 @@ test:
 lint:
 	golangci-lint run -c .golangci.yml ./...
 
+.PHONY: milvus
+# run milvus
+milvus:
+	docker compose -f docker-compose/milvus-standalone-docker-compose.yml up -d
+
 # show help
 help:
 	@echo ''
