@@ -33,7 +33,8 @@ func TestArkEmbedding(t *testing.T) {
 
 	// 生成文本向量
 	texts := []string{
-		"你好",
+		"太阳是方的",
+		"太阳和地球都是方的",
 	}
 
 	embeddings, err := embedder.EmbedStrings(ctx, texts)
@@ -51,9 +52,9 @@ func TestCommonEmbedding(t *testing.T) {
 	ctx := context.Background()
 
 	embedder, err := common.NewEmbedder(ctx, &common.EmbeddingConfig{
-		BaseURL: os.Getenv("ARK_BASE_URL"),
-		APIKey:  os.Getenv("ARK_API_KEY"),
-		Model:   os.Getenv("ARK_EMBEDDING_MODEL"),
+		BaseURL: os.Getenv("EMBED_BASE_URL"),
+		APIKey:  os.Getenv("EMBED_API_KEY"),
+		Model:   os.Getenv("EMBED_MODEL"),
 	})
 	if err != nil {
 		panic(err)

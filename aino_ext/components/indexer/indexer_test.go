@@ -43,7 +43,7 @@ func TestMilvusIndexer(t *testing.T) {
 			Name:     "vector",
 			DataType: entity.FieldTypeBinaryVector,
 			TypeParams: map[string]string{
-				"dim": "81920",
+				"dim": "65536",
 			},
 		},
 		{
@@ -59,6 +59,11 @@ func TestMilvusIndexer(t *testing.T) {
 		},
 	}
 
+	//embedder, err := common.NewEmbedder(ctx, &common.EmbeddingConfig{
+	//	BaseURL: os.Getenv("EMBED_BASE_URL"),
+	//	APIKey:  os.Getenv("EMBED_API_KEY"),
+	//	Model:   os.Getenv("EMBED_MODEL"),
+	//})
 	embedder, err := ark.NewEmbedder(ctx, &ark.EmbeddingConfig{
 		APIKey: os.Getenv("ARK_API_KEY"),
 		Model:  os.Getenv("ARK_EMBEDDING_MODEL"),
