@@ -39,12 +39,25 @@ type EmbedConfig struct {
 }
 
 type IndexerConfig struct {
-	RedisAddr   string `mapstructure:"redis_addr" json:"redis_addr" yaml:"redis_addr"`       // Redis地址
-	RedisPwd    string `mapstructure:"redis_pwd" json:"redis_pwd" yaml:"redis_pwd"`          // Redis密码
-	RedisPrefix string `mapstructure:"redis_prefix" json:"redis_prefix" yaml:"redis_prefix"` // Redis键前缀
+	Dimension  int           `mapstructure:"dimension" json:"dimension" yaml:"dimension"` // 向量维度
+	RedisConf  *RedisConfig  `mapstructure:"redis" json:"redis" yaml:"redis"`             // Redis配置
+	MilvusConf *MilvusConfig `mapstructure:"milvus" json:"milvus" yaml:"milvus"`          // Milvus配置
+}
+
+type RedisConfig struct {
+	Addr        string `mapstructure:"addr" json:"addr" yaml:"addr"`                         // Redis地址
+	Pwd         string `mapstructure:"pwd" json:"pwd" yaml:"pwd"`                            // Redis密码
+	IndexPrefix string `mapstructure:"index_prefix" json:"index_prefix" yaml:"index_prefix"` // 索引前缀
 	IndexName   string `mapstructure:"index_name" json:"index_name" yaml:"index_name"`       // 索引名称
-	Dimension   int    `mapstructure:"dimension" json:"dimension" yaml:"dimension"`          // 向量维度
 	Protocol    int    `mapstructure:"protocol" json:"protocol" yaml:"protocol"`             // Redis协议版本
+}
+
+type MilvusConfig struct {
+	Addr       string `mapstructure:"addr" json:"addr" yaml:"addr"`                   // Milvus地址
+	User       string `mapstructure:"user" json:"user" yaml:"user"`                   // Milvus用户
+	Pwd        string `mapstructure:"pwd" json:"pwd" yaml:"pwd"`                      // Milvus密码
+	DBName     string `mapstructure:"db_name" json:"db_name" yaml:"db_name"`          // Milvus数据库名称
+	Collection string `mapstructure:"collection" json:"collection" yaml:"collection"` // Milvus集合名称
 }
 
 func (c *Config) ValidData() bool {

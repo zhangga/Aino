@@ -19,33 +19,33 @@ import (
 // newIndexer component initialization function of node 'Indexer1' in graph 'KnowledgeIndexing'
 func newIndexer(ctx context.Context) (idr indexer.Indexer, err error) {
 	if err = redispkg.Init(ctx, redispkg.Config{
-		RedisAddr: conf.GlobalConfig.IndexerConf.RedisAddr,
-		RedisPwd:  conf.GlobalConfig.IndexerConf.RedisPwd,
-		IndexName: conf.GlobalConfig.IndexerConf.IndexName,
 		Dimension: conf.GlobalConfig.IndexerConf.Dimension,
-		Protocol:  conf.GlobalConfig.IndexerConf.Protocol,
-	}, conf.GlobalConfig.IndexerConf.RedisPrefix); err != nil {
+		RedisAddr: conf.GlobalConfig.IndexerConf.RedisConf.Addr,
+		RedisPwd:  conf.GlobalConfig.IndexerConf.RedisConf.Pwd,
+		IndexName: conf.GlobalConfig.IndexerConf.RedisConf.IndexName,
+		Protocol:  conf.GlobalConfig.IndexerConf.RedisConf.Protocol,
+	}, conf.GlobalConfig.IndexerConf.RedisConf.IndexPrefix); err != nil {
 		return nil, err
 	}
 
 	var redisClient *redisCli.Client
-	if len(conf.GlobalConfig.IndexerConf.RedisPwd) == 0 {
+	if len(conf.GlobalConfig.IndexerConf.RedisConf.Pwd) == 0 {
 		redisClient = redisCli.NewClient(&redisCli.Options{
-			Addr:     conf.GlobalConfig.IndexerConf.RedisAddr,
-			Protocol: conf.GlobalConfig.IndexerConf.Protocol,
+			Addr:     conf.GlobalConfig.IndexerConf.RedisConf.Addr,
+			Protocol: conf.GlobalConfig.IndexerConf.RedisConf.Protocol,
 		})
 	} else {
 		redisClient = redisCli.NewClient(&redisCli.Options{
-			Addr:     conf.GlobalConfig.IndexerConf.RedisAddr,
-			Password: conf.GlobalConfig.IndexerConf.RedisPwd,
-			Protocol: conf.GlobalConfig.IndexerConf.Protocol,
+			Addr:     conf.GlobalConfig.IndexerConf.RedisConf.Addr,
+			Password: conf.GlobalConfig.IndexerConf.RedisConf.Pwd,
+			Protocol: conf.GlobalConfig.IndexerConf.RedisConf.Protocol,
 		})
 	}
 
 	// TODO Modify component configuration here.
 	config := &redis.IndexerConfig{
 		Client:    redisClient,
-		KeyPrefix: conf.GlobalConfig.IndexerConf.RedisPrefix,
+		KeyPrefix: conf.GlobalConfig.IndexerConf.RedisConf.IndexPrefix,
 		BatchSize: 1,
 		DocumentToHashes: func(ctx context.Context, doc *schema.Document) (*redis.Hashes, error) {
 			if doc.ID == "" {

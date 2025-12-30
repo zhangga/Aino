@@ -20,7 +20,7 @@ import (
 )
 
 var CmdRun = &cobra.Command{
-	Use:   "einoagent",
+	Use:   "agent",
 	Short: "run the einoagent service",
 	Run:   run,
 }

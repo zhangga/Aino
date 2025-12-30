@@ -8,8 +8,12 @@ require (
 	github.com/cloudwego/eino v0.7.14
 	github.com/cloudwego/eino-ext/components/embedding/ark v0.1.1
 	github.com/cloudwego/eino-ext/components/indexer/milvus v0.0.0-20251229121631-716047332ba5
+	github.com/cloudwego/eino-ext/components/indexer/redis v0.0.0-20251223041451-fede3afb5715
+	github.com/cloudwego/eino-ext/components/retriever/milvus v0.0.0-20251229121631-716047332ba5
+	github.com/cloudwego/eino-ext/components/retriever/redis v0.0.0-20251226123311-1d93d527c144
 	github.com/joho/godotenv v1.5.1
 	github.com/milvus-io/milvus-sdk-go/v2 v2.4.2
+	github.com/redis/go-redis/v9 v9.10.0
 	github.com/zhangga/aino v0.0.0-20251228142533-3cdfee407d95
 )
 
@@ -17,11 +21,12 @@ require (
 	github.com/bahlo/generic-list-go v0.2.0 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
 	github.com/bytedance/sonic/loader v0.4.0 // indirect
+	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/cloudwego/base64x v0.1.6 // indirect
-	github.com/cloudwego/eino-ext/components/retriever/milvus v0.0.0-20251229121631-716047332ba5 // indirect
 	github.com/cockroachdb/errors v1.9.1 // indirect
 	github.com/cockroachdb/logtags v0.0.0-20211118104740-dabe8e521a4f // indirect
 	github.com/cockroachdb/redact v1.1.3 // indirect
+	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/eino-contrib/jsonschema v1.0.3 // indirect
 	github.com/getsentry/sentry-go v0.12.0 // indirect

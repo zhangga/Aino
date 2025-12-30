@@ -19,9 +19,15 @@ embed:
   api_key:
   model:
 indexer:
-  redis_addr:
-  redis_pwd:
-  redis_prefix: "knowledge:doc:"
-  index_name: "vector_index"
-  dimension: 4096
-  protocol: 2
+  redis:
+    addr: "localhost:6379"
+    pwd: ""
+    index_prefix: "aino_doc:"
+    index_name: "vector_index"
+    protocol: 2
+  milvus:
+    addr: "localhost:19530"
+    user: ""
+    pwd: ""
+    db_name: "aino"
+    collection: "doc"

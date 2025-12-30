@@ -14,7 +14,7 @@ import (
 )
 
 var CmdRun = &cobra.Command{
-	Use:   "knowledge",
+	Use:   "doc",
 	Short: "run the knowledgeindexing service",
 	Run:   run,
 }

@@ -61,11 +61,15 @@ func init() {
 	rootCmd.Flags().StringVar(&conf.GlobalConfig.EmbedConf.Model, "embed.model", "", "embedding model, eg: --embed.model=xxxxx")
 	// Indexer配置
 	conf.GlobalConfig.IndexerConf = &conf.IndexerConfig{}
-	rootCmd.Flags().StringVar(&conf.GlobalConfig.IndexerConf.RedisAddr, "indexer.redis_addr", "localhost:6379", "redis address, eg: --indexer.redis_addr=localhost:6379")
-	rootCmd.Flags().StringVar(&conf.GlobalConfig.IndexerConf.RedisPwd, "indexer.redis_pwd", "", "redis password, eg: --indexer.redis_pwd=xxxxx")
-	rootCmd.Flags().StringVar(&conf.GlobalConfig.IndexerConf.RedisPrefix, "indexer.redis_prefix", "knowledge:doc:", "redis key prefix, eg: --indexer.redis_prefix=knowledge:doc:")
-	rootCmd.Flags().IntVar(&conf.GlobalConfig.IndexerConf.Dimension, "indexer.dimension", 4096, "vector dimension, eg: --indexer.dimension=4096")
-	rootCmd.Flags().IntVar(&conf.GlobalConfig.IndexerConf.Protocol, "indexer.protocol", 2, "redis protocol version, eg: --indexer.protocol=2")
+	rootCmd.Flags().IntVar(&conf.GlobalConfig.IndexerConf.Dimension, "indexer.dimension", 2048, "vector dimension, eg: --indexer.dimension=2048")
+	conf.GlobalConfig.IndexerConf.RedisConf = &conf.RedisConfig{}
+	rootCmd.Flags().StringVar(&conf.GlobalConfig.IndexerConf.RedisConf.IndexPrefix, "indexer.redis.index_prefix", "aino_doc:", "redis index prefix, eg: --indexer.redis.index_prefix=aino_doc:")
+	rootCmd.Flags().StringVar(&conf.GlobalConfig.IndexerConf.RedisConf.IndexName, "indexer.redis.index_name", "vector_index", "redis index name, eg: --indexer.redis.index_name=vector_index")
+	rootCmd.Flags().IntVar(&conf.GlobalConfig.IndexerConf.RedisConf.Protocol, "indexer.redis.protocol", 2, "redis protocol, eg: --indexer.redis.protocol=2")
+	conf.GlobalConfig.IndexerConf.MilvusConf = &conf.MilvusConfig{}
+	rootCmd.Flags().StringVar(&conf.GlobalConfig.IndexerConf.MilvusConf.DBName, "indexer.milvus.db_name", "aino", "milvus dbName, eg: --indexer.milvus.db_name=aino")
+	rootCmd.Flags().StringVar(&conf.GlobalConfig.IndexerConf.MilvusConf.Collection, "indexer.milvus.collection", "doc", "milvus collection name, eg: --indexer.milvus.collection=doc")
+
 }
 
 func checkConfigPath() {
