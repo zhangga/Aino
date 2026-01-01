@@ -46,6 +46,9 @@ services:
       ETCD_ENDPOINTS: etcd:2379
       MINIO_ADDRESS: minio:9000
       MQ_TYPE: woodpecker
+      # ===== 鉴权相关 =====
+      MILVUS_AUTHORIZATION_ENABLED: "true"
+      MILVUS_ROOT_PASSWORD: "YourStrongPassword"
     volumes:
       - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/milvus:/var/lib/milvus
     healthcheck:
