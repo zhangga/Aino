@@ -76,7 +76,7 @@ func TestMilvusRetriever(t *testing.T) {
 	}
 
 	// Retrieve documents
-	documents, err := retriever.Retrieve(ctx, "太阳")
+	documents, err := retriever.Retrieve(ctx, "张泽强")
 	if err != nil {
 		t.Fatalf("Failed to retrieve: %v", err)
 		return
@@ -162,7 +162,7 @@ func TestRedisRetriever(t *testing.T) {
 	}
 
 	// Retrieve documents
-	documents, err := rtr.Retrieve(ctx, "地球", retriever.WithTopK(1))
+	documents, err := rtr.Retrieve(ctx, "张泽强", retriever.WithTopK(1))
 	if err != nil {
 		t.Fatalf("Failed to retrieve: %v", err)
 		return
